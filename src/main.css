@@ -1,0 +1,36 @@
+html,body{
+    margin:0;
+    font-family:Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+}
+
+header{
+    background:rgba(17,17,17,0.9);
+    height:60px;
+    position:sticky;
+    top:0;
+}
+
+header #header-name{
+    color:white;
+    float:left;
+    font-size:20px;
+    line-height:60px;
+    padding:0 16px;
+}
+
+header #header-settings{
+    float:right;
+    line-height:60px;
+    padding:0 16px;
+}
+
+main{
+    margin:16px;
+}
+
+footer{
+    background:rgba(17,17,17,0.9);
+    color:white;
+    padding:8px;
+    text-align:center;
+}
