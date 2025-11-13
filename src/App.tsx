@@ -1,5 +1,4 @@
 import {JSX} from "react";
-import {Link} from "react-router";
 
 import LBRY from "./LBRY";
 

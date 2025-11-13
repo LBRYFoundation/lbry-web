@@ -1,5 +1,5 @@
 async function rpc(method: string,params?: object): Promise<object>{
-    return await (await fetch(import.meta.env.VITE_DEFAULT_DAEMON, {
+    return await (await fetch(import.meta.env.VITE_DEFAULT_DAEMON,{
         method: 'POST',
         // headers: {
         //     'Content-Type': 'application/json',

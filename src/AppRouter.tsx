@@ -1,9 +1,9 @@
-import {JSX} from "react";
+import {JSX, PropsWithChildren} from "react";
 import {BrowserRouter, MemoryRouter} from "react-router";
 
 const isElectron: boolean = false; // TODO Add detection
 
-function AppRouter({ children }): JSX.Element{
+function AppRouter({ children }: PropsWithChildren): JSX.Element{
     if(isElectron){
         return <MemoryRouter>{children}</MemoryRouter>;
     }
