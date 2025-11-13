@@ -18,6 +18,12 @@ header #header-name{
     padding:0 16px;
 }
 
+header #header-wallet{
+    float:right;
+    line-height:60px;
+    padding:0 16px;
+}
+
 header #header-settings{
     float:right;
     line-height:60px;
