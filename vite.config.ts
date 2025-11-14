@@ -4,26 +4,29 @@ import {defineConfig} from 'vite';
 import type ProxyOptions from 'vite';
 import react from '@vitejs/plugin-react';
 
+const proxyConfig: ProxyOptions = {
+  // Only for development
+  configure: (proxy: EventEmitter, options: ProxyOptions): void => {
+    options.rewrite = (path: string): string => {
+      const proxyURL: URL = new URL(path,'file:');
+      const url: URL = new URL(proxyURL.searchParams.get('url'));
+
+      options.target = url.origin;
+      return url.pathname + url.search;
+    };
+    proxy.on('proxyReq',(proxyReq: ClientRequest): void => {
+      proxyReq.removeHeader('Origin');
+    });
+  },
+};
+
 export default defineConfig({
   base: './',
   plugins: [react()],
   server: {
     proxy: {
-      '/api/rpc': {
-        configure: (proxy: EventEmitter, options: ProxyOptions): void => {
-          options.rewrite = (path: string): string => {
-            const proxyURL: URL = new URL(path,'file:');
-            const url: URL = new URL(proxyURL.searchParams.get('url'));
-
-            proxy.on('proxyReq',(proxyReq: ClientRequest): void => {
-              proxyReq.removeHeader('Origin');
-            });
-
-            options.target = url.origin;
-            return url.pathname + url.search;
-          };
-        },
-      },
+      '/api/proxy': proxyConfig,
+      '/api/rpc': proxyConfig,
     },
   },
 });

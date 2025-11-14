@@ -8,7 +8,29 @@ process.loadEnvFile();
 app.use(express.json());
 app.use(express.static('dist'));
 
-app.post('/api/rpc',async (req: Express.Request, res: Express.Response, next): Promise<void> => {
+app.get('/api/proxy',(req: Express.Request, res: Express.Response, next): void => {
+    if(!req.query.url){
+        res.header('Content-Type','text/plain').status(400).send('Error')
+        return;
+    }
+
+    const headers: Headers = new Headers();
+    if(req.header('Authorization')){
+        headers.append('Authorization',req.header('Authorization'));
+    }
+
+    fetch(req.query.url,{
+        method: 'GET',
+        headers: headers,
+    }).then((resp: Response): void => {
+        res.header('Content-Type',resp.headers.get('Content-Type'))
+        resp.text().then((text: string): void => {
+            res.send(text);
+        }).catch(next);
+    }).catch(next);
+});
+
+app.post('/api/rpc',(req: Express.Request, res: Express.Response, next): void => {
     if(!req.query.url){
         res.json({
             jsonrpc: '2.0',

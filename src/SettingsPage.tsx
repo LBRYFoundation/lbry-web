@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {JSX, useEffect, useState} from "react";
 
 import LBRY from "./LBRY";
 
@@ -27,7 +27,7 @@ function SettingsPage(){
                             <span>Loading...</span>
                         ):(
                             <>
-                                {Object.keys(settings).map((setting: string, i: number) => (
+                                {Object.keys(settings).map((setting: string, i: number): JSX.Element => (
                                     <div key={i} style={{border:'1px solid red',margin:'8px 0',padding:'16px'}}>
                                         <b>{setting}</b><br/>
                                         <span>{JSON.stringify(settings[setting])}</span>

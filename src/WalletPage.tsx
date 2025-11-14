@@ -1,26 +1,68 @@
+import {JSX, useEffect, useState} from "react";
+import {Link} from "react-router";
+
 import LBRY from "./LBRY";
 
 function WalletPage(){
-    LBRY.rpc(import.meta.env.VITE_DAEMON_DEFAULT,import.meta.env.VITE_DAEMON_PROXY==='true','wallet_balance').then(json => {
-        if(json.error){
-            document.getElementById('wallet').innerHTML = json.error.message;
-            return;
-        }
-    });
+    const [wallet,setWallet] = useState(null);
+    const [transactions,setTransactions] = useState([]);
 
-    LBRY.rpc(import.meta.env.VITE_DAEMON_DEFAULT,import.meta.env.VITE_DAEMON_PROXY==='true','txo_list').then(json => {
-        if(json.error){
-            document.getElementById('transactions').innerHTML = json.error.message;
-            return;
-        }
-    });
+    useEffect((): void => {
+        LBRY.rpc(import.meta.env.VITE_DAEMON_DEFAULT,import.meta.env.VITE_DAEMON_PROXY==='true','wallet_balance').then(json => {
+            if(json.error){
+                document.getElementById('wallet').innerHTML = json.error.message;
+                return;
+            }
+            setWallet(json.result);
+        });
+    },[]);
+
+    useEffect((): void => {
+        LBRY.rpc(import.meta.env.VITE_DAEMON_DEFAULT,import.meta.env.VITE_DAEMON_PROXY==='true','txo_list').then(json => {
+            if(json.error){
+                document.getElementById('transactions').innerHTML = json.error.message;
+                return;
+            }
+            setTransactions(json.result?.items || []);
+        });
+    },[]);
 
     return (
         <>
             <h1>Wallet</h1>
-            <div id="wallet"></div>
+            <div id="wallet">
+                {wallet?(
+                    <span><b>Available:</b> {wallet.available}</span>
+                ):null}
+            </div>
             <h2>Transactions</h2>
-            <div id="transactions"></div>
+            <div id="transactions">
+                <table style={{width:'100%'}}>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Details</th>
+                            <th>Transaction</th>
+                            <th>LBC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {transactions.map((transaction: unknown, i: number): JSX.Element => (
+                        <tr key={i}>
+                            <td>
+                                <span>{transaction.timestamp}</span><br/>
+                                <span>{transaction.timestamp}</span>
+                            </td>
+                            <td>{transaction.type}</td>
+                            <td></td>
+                            <td><Link to={`https://explorer.lbry.org/tx/${transaction.txid}`} target="_blank">{transaction.txid}</Link></td>
+                            <td>{transaction.amount}</td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </table>
+            </div>
         </>
     );
 }
