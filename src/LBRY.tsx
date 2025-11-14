@@ -1,9 +1,10 @@
 async function rpc(method: string,params?: object): Promise<object>{
-    return await (await fetch(import.meta.env.VITE_DEFAULT_DAEMON,{
+    //return await (await fetch(import.meta.env.VITE_DEFAULT_DAEMON,{
+    return await (await fetch('/api/rpc',{
         method: 'POST',
-        // headers: {
-        //     'Content-Type': 'application/json',
-        // },
+        headers: {
+            'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
             jsonrpc: '2.0',
             method: method,
