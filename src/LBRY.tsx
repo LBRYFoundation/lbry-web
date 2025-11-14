@@ -1,10 +1,19 @@
-async function rpc(method: string,params?: object): Promise<object>{
-    //return await (await fetch(import.meta.env.VITE_DEFAULT_DAEMON,{
-    return await (await fetch('/api/rpc',{
+async function rpc(url: string,proxy: boolean,method: string,params?: object,authorization?: string): Promise<object>{
+    const input: URL = new URL(proxy?'/api/rpc':url,window.location.href);
+    if(proxy){
+        input.searchParams.set('url',url);
+    }
+
+    const headers: Headers = new Headers({
+        'Content-Type': 'application/json',
+    });
+    if(authorization){
+        headers.append('Authorization',authorization);
+    }
+
+    return await (await fetch(input,{
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers: headers,
         body: JSON.stringify({
             jsonrpc: '2.0',
             method: method,

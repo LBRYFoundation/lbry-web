@@ -9,11 +9,28 @@ app.use(express.json());
 app.use(express.static('dist'));
 
 app.post('/api/rpc',async (req: Express.Request, res: Express.Response, next): Promise<void> => {
-    fetch(process.env.DEFAULT_DAEMON,{
+    if(!req.query.url){
+        res.json({
+            jsonrpc: '2.0',
+            id: req.body.id,
+            error: {
+                message: 'Missing URL',
+            },
+        });
+        return;
+    }
+
+    const headers: Headers = new Headers();
+    if(req.header('Authorization')){
+        headers.append('Authorization',req.header('Authorization'));
+    }
+    if(req.header('Content-Type')){
+        headers.append('Content-Type',req.header('Content-Type'));
+    }
+
+    fetch(req.query.url,{
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers: headers,
         body: JSON.stringify(req.body),
     }).then((resp: Response): void => {
         resp.json().then((json): void => {

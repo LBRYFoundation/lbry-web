@@ -1,21 +1,43 @@
+import {useEffect, useState} from "react";
+
 import LBRY from "./LBRY";
 
 function SettingsPage(){
-    LBRY.rpc('settings_get').then(json => {
-        if(json.error){
-            document.getElementById('settings').innerHTML = json.error.message;
-            return;
-        }
-        document.getElementById('settings').innerHTML = '';
-        json.result.items.forEach((item: object): void => {
-            document.getElementById('settings').innerHTML += '<div style="border:1px solid red;display:inline-block;max-width:200px;"><img alt="Thumbnail" src="'+(item.value?.thumbnail?.url || item.reposted_claim?.value?.thumbnail?.url)+'" style="height:100px;"><br>'+(item.value?.title || item.reposted_claim?.value?.title)+'</div>';
+    const [settings,setSettings]: [object,(value: object) => object] = useState();
+
+    useEffect((): void => {
+        LBRY.rpc(import.meta.env.VITE_DAEMON_DEFAULT,import.meta.env.VITE_DAEMON_PROXY==='true','settings_get').then((json: object): void => {
+            setSettings(json.result || json.error?.message || 'Unknown error');
         });
-    });
+    },[]);
 
     return (
         <>
             <h1>Settings</h1>
-            <div id="settings"></div>
+            <div id="settings">
+                {(typeof settings==='string')?(
+                    <>
+                        <b>Error:</b><br/>
+                        <span>{settings}</span>
+                    </>
+                ):null}
+                {(typeof settings==='object')?(
+                    <>
+                        {(settings==null)?(
+                            <span>Loading...</span>
+                        ):(
+                            <>
+                                {Object.keys(settings).map((setting: string, i: number) => (
+                                    <div key={i} style={{border:'1px solid red',margin:'8px 0',padding:'16px'}}>
+                                        <b>{setting}</b><br/>
+                                        <span>{JSON.stringify(settings[setting])}</span>
+                                    </div>
+                                ))}
+                            </>
+                        )}
+                    </>
+                ):null}
+            </div>
         </>
     );
 }
