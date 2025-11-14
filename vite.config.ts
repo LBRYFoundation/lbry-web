@@ -21,7 +21,6 @@ const proxyConfig: ProxyOptions = {
 };
 
 export default defineConfig({
-  base: './',
   plugins: [react()],
   server: {
     proxy: {
