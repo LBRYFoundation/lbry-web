@@ -1,5 +1,8 @@
 FROM node:alpine
 
+COPY . .
+
+RUN npm run install
 RUN npm run build
 
 EXPOSE 3000
