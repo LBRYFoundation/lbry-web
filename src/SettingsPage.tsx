@@ -6,7 +6,7 @@ function SettingsPage(){
     const [settings,setSettings]: [object,(value: object) => object] = useState();
 
     useEffect((): void => {
-        LBRY.rpc(import.meta.env.VITE_DAEMON_DEFAULT,import.meta.env.VITE_DAEMON_PROXY==='true','settings_get').then((json: object): void => {
+        LBRY.rpc(import.meta.env.VITE_DAEMON_DEFAULT,'settings_get',null,null,import.meta.env.VITE_DAEMON_PROXY==='true').then((json: object): void => {
             setSettings(json.result || json.error?.message || 'Unknown error');
         });
     },[]);

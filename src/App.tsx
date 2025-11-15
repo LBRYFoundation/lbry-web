@@ -11,19 +11,19 @@ function App(): JSX.Element {
     const [row3,setRow3] = useState([]);
 
     useEffect((): void => {
-        LBRY.rpc(import.meta.env.VITE_DAEMON_DEFAULT,import.meta.env.VITE_DAEMON_PROXY==='true','claim_search',{"page_size":4,"claim_type":["stream","repost","channel"],"no_totals":true,"any_tags":[],"not_tags":notTags,"channel_ids":["80d2590ad04e36fb1d077a9b9e3a8bba76defdf8","b58dfaeab6c70754d792cdd9b56ff59b90aea334"],"not_channel_ids":[],"order_by":["release_time"],"has_source":true,"release_time":">1731193200","include_purchase_receipt":true}).then(json => {
+        LBRY.rpc(import.meta.env.VITE_DAEMON_DEFAULT,'claim_search',{"page_size":4,"claim_type":["stream","repost","channel"],"no_totals":true,"any_tags":[],"not_tags":notTags,"channel_ids":["80d2590ad04e36fb1d077a9b9e3a8bba76defdf8","b58dfaeab6c70754d792cdd9b56ff59b90aea334"],"not_channel_ids":[],"order_by":["release_time"],"has_source":true,"release_time":">1731193200","include_purchase_receipt":true},null,import.meta.env.VITE_DAEMON_PROXY==='true').then(json => {
             setRow1(json.result.items);
         });
     },[]);
 
     useEffect((): void => {
-        LBRY.rpc(import.meta.env.VITE_DAEMON_DEFAULT,import.meta.env.VITE_DAEMON_PROXY==='true','claim_search',{"page_size":4,"claim_type":["stream"],"no_totals":true,"any_tags":[],"not_tags":notTags,"channel_ids":[],"not_channel_ids":[],"order_by":["effective_amount"],"has_source":true,"release_time":">1762902000","limit_claims_per_channel":2,"include_purchase_receipt":true}).then(json => {
+        LBRY.rpc(import.meta.env.VITE_DAEMON_DEFAULT,'claim_search',{"page_size":4,"claim_type":["stream"],"no_totals":true,"any_tags":[],"not_tags":notTags,"channel_ids":[],"not_channel_ids":[],"order_by":["effective_amount"],"has_source":true,"release_time":">1762902000","limit_claims_per_channel":2,"include_purchase_receipt":true},null,import.meta.env.VITE_DAEMON_PROXY==='true').then(json => {
             setRow2(json.result.items);
         });
     },[]);
 
     useEffect((): void => {
-        LBRY.rpc(import.meta.env.VITE_DAEMON_DEFAULT,import.meta.env.VITE_DAEMON_PROXY==='true','claim_search',{"page_size":4,"claim_type":["stream","repost","channel"],"no_totals":true,"any_tags":[],"not_tags":notTags,"channel_ids":["3fda836a92faaceedfe398225fb9b2ee2ed1f01a"],"not_channel_ids":[],"order_by":["release_time"],"has_source":true,"include_purchase_receipt":true}).then(json => {
+        LBRY.rpc(import.meta.env.VITE_DAEMON_DEFAULT,'claim_search',{"page_size":4,"claim_type":["stream","repost","channel"],"no_totals":true,"any_tags":[],"not_tags":notTags,"channel_ids":["3fda836a92faaceedfe398225fb9b2ee2ed1f01a"],"not_channel_ids":[],"order_by":["release_time"],"has_source":true,"include_purchase_receipt":true},null,import.meta.env.VITE_DAEMON_PROXY==='true').then(json => {
             setRow3(json.result.items);
         });
     },[]);

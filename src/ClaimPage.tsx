@@ -25,13 +25,13 @@ function SettingsPage(): JSX.Element{
     const [markdown,setMarkdown] = useState('');
 
     useEffect(() => {
-        LBRY.rpc(import.meta.env.VITE_DAEMON_DEFAULT,import.meta.env.VITE_DAEMON_PROXY==='true','resolve',{urls:[claim]}).then((json: object): void => {
+        LBRY.rpc(import.meta.env.VITE_DAEMON_DEFAULT,'resolve',{urls:[claim]},null,import.meta.env.VITE_DAEMON_PROXY==='true').then((json: object): void => {
             setClaimResolveData(json.result[claim] ?? null);
         });
     }, [claim]);
 
     useEffect(() => {
-        LBRY.rpc(import.meta.env.VITE_DAEMON_DEFAULT,import.meta.env.VITE_DAEMON_PROXY==='true','get',{uri:claim}).then((json: object): void => {
+        LBRY.rpc(import.meta.env.VITE_DAEMON_DEFAULT,'get',{uri:claim},null,import.meta.env.VITE_DAEMON_PROXY==='true').then((json: object): void => {
             setClaimGetData(json.result);
         });
     }, [claim]);
@@ -54,7 +54,7 @@ function SettingsPage(): JSX.Element{
                             {claimResolveData.value.source.media_type==='text/markdown'?(
                                 claimGetData?(
                                     <div className="markdown">
-                                        {downloadMarkdownFile(claimGetData,setMarkdown)}
+                                        {downloadMarkdownFile(claimGetData,setMarkdown) && null}
                                         <Markdown>{markdown}</Markdown>
                                     </div>
                                 ):null
