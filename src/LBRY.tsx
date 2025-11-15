@@ -14,7 +14,7 @@ async function rpcDirect(input: string|URL|Request,method: string,params?: objec
     const message: object = {
         jsonrpc: VERSION_2_0,
         method: method,
-        params: params,
+        params: params || undefined,
         id: generateID(),
     };
 

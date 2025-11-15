@@ -4,35 +4,35 @@ html,body{
 }
 
 body{
-    background:gray;
+    background:rgb(31, 31, 34);
+    color:white;
 }
 
 header{
+    backdrop-filter: blur(4px);
     background:rgba(17,17,17,0.9);
     height:60px;
     position:sticky;
     top:0;
     z-index:10000;
+
+    -webkit-backdrop-filter: blur(4px);
 }
 
-header #header-name{
+.hoverHeaderButton{
     color:white;
-    float:left;
-    font-size:20px;
-    line-height:60px;
-    padding:0 16px;
 }
 
-header #header-wallet{
-    float:right;
-    line-height:60px;
-    padding:0 16px;
+.hoverHeaderButtonFill{
+    fill:white;
 }
 
-header #header-settings{
-    float:right;
-    line-height:60px;
-    padding:0 16px;
+.hoverHeaderButton:hover{
+    color:rgb(43, 187, 144);
+}
+
+.hoverHeaderButtonFill:hover{
+    fill:rgb(43, 187, 144);
 }
 
 main{
@@ -44,7 +44,7 @@ main{
 }
 
 .claimPreviewTile{
-    color:black;
+    color:inherit;
     display:inline-block;
     margin:10px;
     text-decoration:none;
