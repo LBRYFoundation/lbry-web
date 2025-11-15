@@ -76,6 +76,9 @@ function SettingsPage(): JSX.Element{
                 </div>
             );
         }
+        if(claimResolveData.value_type==='repost'){
+            return (<div>TODO Repost</div>);
+        }
         return <div>Unknown claim type</div>;
     }
     if(claimResolveData===null){
