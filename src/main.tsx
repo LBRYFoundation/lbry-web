@@ -6,6 +6,7 @@ import App from './App';
 import AppRouter from './AppRouter';
 import ClaimPage from "./ClaimPage";
 import NotFound from './NotFound';
+import SearchPage from "./SearchPage";
 import SettingsPage from "./SettingsPage";
 import WalletPage from "./WalletPage";
 import Footer from "./components/Footer";
@@ -25,6 +26,7 @@ const element: ReactElement = (
                     <Route path="/about" element={<App/>}/>
                     <Route path="/claim/*" element={<ClaimPage/>}/>
                     <Route path="/wallet" element={<WalletPage/>}/>
+                    <Route path="/search" element={<SearchPage/>}/>
                     <Route path="/settings" element={<SettingsPage/>}/>
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>

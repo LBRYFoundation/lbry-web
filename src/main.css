@@ -42,6 +42,14 @@ header{
     opacity: .3;
 }
 
+header input:hover{
+    outline: #52525B solid 2px;
+}
+
+header input:focus-visible{
+    outline:rgb(43, 187, 144) solid 2px;
+}
+
 main{
     margin:16px;
 }
