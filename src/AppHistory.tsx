@@ -15,7 +15,7 @@ function useAppHistory(): object{
             stack.current.splice(index+1);
             stack.current.push(location);
             idx.current = history.state.idx;
-            setIndex(index+1);
+            setIndex(index+1); // eslint-disable-line
         }
         if(navigationType===NavigationType.Pop){
             if(idx.current>history.state.idx){
@@ -30,7 +30,7 @@ function useAppHistory(): object{
             stack.current[index] = location;
             idx.current = history.state.idx;
         }
-    },[location,navigationType]);
+    },[location,navigationType]); // eslint-disable-line
 
     function getPrevious(): object[]{
         return stack.current.slice(0,index);
