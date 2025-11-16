@@ -5,7 +5,7 @@ function useAppHistory(): object{
     const location: Location = useLocation();
     const navigationType: NavigationType = useNavigationType();
 
-    const [idx, setIdx] = useState(-1);
+    const idx: RefObject<number> = useRef<number>(-1);
 
     const [index, setIndex] = useState(-1);
     const stack: RefObject<object[]> = useRef<object[]>([location]);
@@ -14,20 +14,21 @@ function useAppHistory(): object{
         if(navigationType===NavigationType.Push){
             stack.current.splice(index+1);
             stack.current.push(location);
-            setIdx(history.state.idx);
+            idx.current = history.state.idx;
             setIndex(index+1);
         }
         if(navigationType===NavigationType.Pop){
-            if(idx>history.state.idx){
+            if(idx.current>history.state.idx){
                 setIndex(index-1);
             }
-            if(idx<history.state.idx){
+            if(idx.current<history.state.idx){
                 setIndex(index+1);
             }
-            setIdx(history.state.idx);
+            idx.current = history.state.idx;
         }
         if(navigationType===NavigationType.Replace){
             stack.current[index] = location;
+            idx.current = history.state.idx;
         }
     },[location,navigationType]);
 
