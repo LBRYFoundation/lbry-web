@@ -11,6 +11,20 @@ function CustomSVG({icon,viewBox,style}): JSX.Element {
             </g>
         );
     }
+    if(icon==='arrow-left'){
+        element = (
+            <g fill="none" fillRule="evenodd" strokeLinecap="round" strokeWidth="2">
+                <polyline points="15 18 9 12 15 6"/>
+            </g>
+        );
+    }
+    if(icon==='arrow-right'){
+        element = (
+            <g fill="none" fillRule="evenodd" strokeLinecap="round" strokeWidth="2">
+                <polyline points="9 18 15 12 9 6"/>
+            </g>
+        );
+    }
     if (icon === 'lbc') {
         element = (
             <>
@@ -71,6 +85,15 @@ function CustomSVG({icon,viewBox,style}): JSX.Element {
                     d="M296,85.9V100l-138.8,85.3L52.6,134l0.2-7.9l104,51.2L289,96.1v-5.8L164.2,30.1L25,116.2v38.5l131.8,65.2 l137.6-84.4l3.9,6l-141.1,86.4L18.1,159.1v-46.8l145.8-90.2C163.9,22.1,296,85.9,296,85.9z"></path>
                 <path d="M294.3,150.9l2-12.6l-12.2-2.1l0.8-4.9l17.1,2.9l-2.8,17.5L294.3,150.9L294.3,150.9z"></path>
             </>
+        );
+    }
+    if(icon==='menu'){
+        element = (
+            <g strokeWidth="2">
+                <line x1="3" y1="12" x2="21" y2="12"/>
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <line x1="3" y1="18" x2="21" y2="18"/>
+            </g>
         );
     }
 

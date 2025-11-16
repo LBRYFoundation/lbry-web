@@ -25,14 +25,21 @@ header{
 
 .hoverHeaderButtonFill{
     fill:white;
+    stroke:white;
 }
 
 .hoverHeaderButton:hover{
     color:rgb(43, 187, 144);
 }
 
-.hoverHeaderButtonFill:hover{
+.hoverHeaderButtonFill:not([disabled]):hover{
     fill:rgb(43, 187, 144);
+    stroke:rgb(43, 187, 144);
+}
+
+.hoverHeaderButtonFill[disabled]{
+    cursor:default;
+    opacity: .3;
 }
 
 main{
