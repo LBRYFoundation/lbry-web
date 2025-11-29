@@ -1,9 +1,8 @@
 import { JSX, useEffect, useState } from "react";
-
-import LBRY from "./LBRY";
-import ClaimPreviewTile from "./components/ClaimPreviewTile";
-import useDaemonRPC from "./DaemonRPC";
-import { NOT_TAGS } from "./Constants";
+import { NOT_TAGS } from "~/Constants";
+import useDaemonRPC from "~/DaemonRPC";
+import LBRY from "~/LBRY";
+import ClaimPreviewTile from "~/components/ClaimPreviewTile";
 
 function Home(): JSX.Element {
   const daemonRPC: string = useDaemonRPC();

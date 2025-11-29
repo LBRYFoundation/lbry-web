@@ -1,8 +1,7 @@
 import { JSX, useEffect, useState } from "react";
 import { Link } from "react-router";
-
-import LBRY from "./LBRY";
-import useDaemonRPC from "./DaemonRPC";
+import useDaemonRPC from "~/DaemonRPC";
+import LBRY from "~/LBRY";
 
 function WalletPage() {
   const daemonRPC: string = useDaemonRPC();

@@ -1,9 +1,9 @@
 import { JSX, useEffect, useState } from "react";
 import { Location, useLocation } from "react-router";
-import LBRY from "./LBRY";
-import { NOT_TAGS } from "./Constants";
-import useDaemonRPC from "./DaemonRPC";
-import ClaimPreviewTile from "./components/ClaimPreviewTile";
+import { NOT_TAGS } from "~/Constants";
+import useDaemonRPC from "~/DaemonRPC";
+import LBRY from "~/LBRY";
+import ClaimPreviewTile from "~/components/ClaimPreviewTile";
 
 function SearchPage(): JSX.Element {
   const daemonRPC: string = useDaemonRPC();

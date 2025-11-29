@@ -1,16 +1,15 @@
 import { ChangeEvent, JSX, useEffect, useState } from "react";
 import {
   Link,
-  NavLink,
-  NavigateFunction,
-  useNavigate,
-  useLocation,
   Location,
+  NavigateFunction,
   NavigateOptions,
+  NavLink,
+  useLocation,
+  useNavigate,
 } from "react-router";
-
-import useAppHistory from "../AppHistory";
-import CustomSVG from "./CustomSVG";
+import useAppHistory from "~/AppHistory";
+import CustomSVG from "~/components/CustomSVG";
 
 function Header({ menuOpen, menuOpenSetter }): JSX.Element {
   const appHistory: object = useAppHistory();

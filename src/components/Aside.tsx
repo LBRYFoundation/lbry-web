@@ -1,6 +1,6 @@
 import React, { JSX } from "react";
 import { Link, Location, NavLink, useLocation } from "react-router";
-import CustomSVG from "./CustomSVG";
+import CustomSVG from "~/components/CustomSVG";
 
 function Aside({ open }): JSX.Element {
   const location: Location = useLocation();

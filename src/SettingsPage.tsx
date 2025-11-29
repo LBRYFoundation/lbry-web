@@ -1,7 +1,6 @@
 import { JSX, useEffect, useState } from "react";
-
-import LBRY from "./LBRY";
-import useDaemonRPC from "./DaemonRPC";
+import useDaemonRPC from "~/DaemonRPC";
+import LBRY from "~/LBRY";
 
 function SettingsPage() {
   const daemonRPC: string = useDaemonRPC();

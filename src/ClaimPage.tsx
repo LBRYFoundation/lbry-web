@@ -1,9 +1,8 @@
 import { JSX, useEffect, useState } from "react";
 import Markdown from "react-markdown";
 import { Params, useParams } from "react-router";
-
-import LBRY from "./LBRY";
-import useDaemonRPC from "./DaemonRPC";
+import useDaemonRPC from "~/DaemonRPC";
+import LBRY from "~/LBRY";
 
 function downloadMarkdownFile(claimGetData, setMarkdown): void {
   const url: string = claimGetData?.streaming_url;

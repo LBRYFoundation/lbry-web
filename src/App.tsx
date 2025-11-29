@@ -1,22 +1,21 @@
 import React, { JSX, StrictMode, useState } from "react";
 import { Route, Routes } from "react-router";
+import AppRouter from "~/AppRouter";
+import ClaimPage from "~/ClaimPage";
+import Discover from "~/Discover";
+import Following from "~/Following";
+import Home from "~/Home";
+import Library from "~/Library";
+import Lists from "~/Lists";
+import NotFound from "~/NotFound";
+import SearchPage from "~/SearchPage";
+import SettingsPage from "~/SettingsPage";
+import Tags from "~/Tags";
+import WalletPage from "~/WalletPage";
+import Aside from "~/components/Aside";
+import Header from "~/components/Header";
 
-import AppRouter from "./AppRouter";
-import Home from "./Home";
-import ClaimPage from "./ClaimPage";
-import WalletPage from "./WalletPage";
-import SearchPage from "./SearchPage";
-import SettingsPage from "./SettingsPage";
-import NotFound from "./NotFound";
-
-import Aside from "./components/Aside";
-import Header from "./components/Header";
-import Following from "./Following";
-import Tags from "./Tags";
-import Discover from "./Discover";
-import Library from "./Library";
-import Lists from "./Lists";
-// import Footer from "./components/Footer";
+// import Footer from "~/components/Footer";
 
 function App(): JSX.Element {
   const [isMenuOpen, setMenuOpen] = useState(false);

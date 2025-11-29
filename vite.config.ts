@@ -1,9 +1,9 @@
+import react from "@vitejs/plugin-react";
 import type EventEmitter from "events";
 import type ClientRequest from "http";
+import path from "path";
 import { defineConfig } from "vite";
 import type ProxyOptions from "vite";
-import react from "@vitejs/plugin-react";
-import path from "path";
 
 const proxyConfig: ProxyOptions = {
   // Only for development
