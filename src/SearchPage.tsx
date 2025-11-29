@@ -33,8 +33,6 @@ function SearchPage(): JSX.Element{
         });
     },[daemonRPC,query]);
 
-    console.log(resolveItem)
-
     return (
         <div>
             <span>Search results for '<b>{(query)}</b>':</span>

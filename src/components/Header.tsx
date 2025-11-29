@@ -10,10 +10,12 @@ function Header({menuOpen,menuOpenSetter}): JSX.Element {
     const location: Location = useLocation();
     const navigate: NavigateFunction = useNavigate();
 
+    const urlQuery = new URLSearchParams(location.search).get('q') || '';
     const [query,setQuery] = useState('');
+
     useEffect((): void => {
-        setQuery(new URLSearchParams(location.search).get('q') || '');
-    }, [location.search]);
+        setQuery(urlQuery);
+    }, [urlQuery]);
 
     function handleSubmitSearch(event): boolean{
         event.preventDefault();
