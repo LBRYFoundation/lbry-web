@@ -4,7 +4,7 @@ import {Link, NavLink, NavigateFunction, useNavigate} from "react-router";
 import useAppHistory from "../AppHistory";
 import CustomSVG from "./CustomSVG";
 
-function Header(): JSX.Element {
+function Header({menuOpen,menuOpenSetter}): JSX.Element {
     const appHistory: object = useAppHistory();
 
     const navigate: NavigateFunction = useNavigate();
@@ -26,7 +26,9 @@ function Header(): JSX.Element {
                 whiteSpace: 'nowrap'
             }}>
                 <div style={{justifyContent: 'flex-start'}}>
-                    <Link className="hoverHeaderButtonFill" to="#menu" style={{
+                    <NavLink className={menuOpen?"hoverHeaderButtonFill menu-open":"hoverHeaderButtonFill"} onClick={(): void => {
+                        menuOpenSetter(!menuOpen);
+                    }} style={{
                         backgroundColor: 'rgba(45, 45, 45, 0.7)',
                         borderRadius: '1.5rem',
                         display: 'inline-block',
@@ -35,9 +37,9 @@ function Header(): JSX.Element {
                         verticalAlign: 'middle',
                         marginRight:'10px',
                         width: '40px'
-                    }}>
+                    }} to={null}>
                         <CustomSVG icon="menu" viewBox="0 0 24 24" style={{height: '16px', padding: '12px 0'}}/>
-                    </Link>
+                    </NavLink>
                     <Link className="hoverHeaderButton"
                           style={{fill: 'white', margin: '0 10px', textDecoration: 'none'}} to="/">
                         <CustomSVG icon="logo" style={{height: '40px', verticalAlign: 'middle', width: '40px'}}
