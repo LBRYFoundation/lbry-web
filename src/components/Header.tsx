@@ -1,5 +1,5 @@
-import {JSX} from "react";
-import {Link, NavLink, NavigateFunction, useNavigate} from "react-router";
+import {ChangeEvent, JSX, useEffect, useState} from "react";
+import {Link, NavLink, NavigateFunction, useNavigate, useLocation, Location, NavigateOptions} from "react-router";
 
 import useAppHistory from "../AppHistory";
 import CustomSVG from "./CustomSVG";
@@ -7,12 +7,23 @@ import CustomSVG from "./CustomSVG";
 function Header({menuOpen,menuOpenSetter}): JSX.Element {
     const appHistory: object = useAppHistory();
 
+    const location: Location = useLocation();
     const navigate: NavigateFunction = useNavigate();
+
+    const [query,setQuery] = useState('');
+    useEffect((): void => {
+        setQuery(new URLSearchParams(location.search).get('q') || '');
+    }, [location.search]);
 
     function handleSubmitSearch(event): boolean{
         event.preventDefault();
         const input: HTMLInputElement = event.target.elements[0];
-        navigate(`/search?q=${encodeURIComponent(input.value)}`,{});
+        const options: NavigateOptions = {
+            state: {
+                q: input.value,
+            },
+        };
+        navigate(`/search?q=${encodeURIComponent(input.value)}`,options);
         return false;
     }
 
@@ -84,7 +95,7 @@ function Header({menuOpen,menuOpenSetter}): JSX.Element {
                     <div style={{display: 'inline-block', height: '40px'}}>
                         <form onSubmit={handleSubmitSearch} style={{height:'100%',marginRight:'10px',position:'relative'}}>
                             <CustomSVG icon="search" style={{fill:'transparent',height:'100%',left:'10px',position:'absolute',stroke:'white',strokeWidth:'2px',verticalAlign:'middle',width:'16px'}} viewBox="0 0 24 24"/>
-                            <input placeholder="Search" style={{
+                            <input onChange={(e: ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)} placeholder="Search" style={{
                                 backgroundColor: 'rgba(45, 45, 45, 0.7)',
                                 border: 'none',
                                 borderRadius: '6px',
@@ -95,7 +106,7 @@ function Header({menuOpen,menuOpenSetter}): JSX.Element {
                                 paddingRight: '10px',
                                 verticalAlign:'middle',
                                 width:'480px',
-                            }}/>
+                            }} value={query}/>
                         </form>
                     </div>
                     <NavLink className="hoverHeaderButtonFill" to={null} style={{
@@ -154,7 +165,7 @@ function Header({menuOpen,menuOpenSetter}): JSX.Element {
                         verticalAlign: 'middle',
                         width: '40px'
                     }}>
-                        <CustomSVG icon="account" viewBox="0 0 24 24" style={{height: '18px', padding: '11px 0'}}/>
+                        <CustomSVG icon="account" viewBox="0 0 24 24" style={{fill:'transparent',height: '18px',padding: '11px 0',strokeWidth:'2px'}}/>
                     </Link>
                 </div>
             </div>

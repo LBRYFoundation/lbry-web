@@ -31,23 +31,7 @@ function Following(): JSX.Element {
 
     return (
         <>
-            <div className="claim-preview-section">
-                {row1.map((cell: unknown, i: number) => (
-                    <ClaimPreviewTile claim={cell} key={i}/>
-                ))}
-            </div>
-            {row2.length > 0 ? <h2>Top Content from Today</h2> : null}
-            <div className="claim-preview-section">
-                {row2.map((cell: unknown, i: number) => (
-                    <ClaimPreviewTile claim={cell} key={i}/>
-                ))}
-            </div>
-            {row3.length > 0 ? <h2>Latest From @lbry</h2> : null}
-            <div className="claim-preview-section">
-                {row3.map((cell: unknown, i: number) => (
-                    <ClaimPreviewTile claim={cell} key={i}/>
-                ))}
-            </div>
+            TODO Following page
         </>
     );
 }
