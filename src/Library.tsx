@@ -1,11 +1,7 @@
-import {JSX} from "react";
+import { JSX } from "react";
 
 function Library(): JSX.Element {
-    return (
-        <>
-            TODO Library page
-        </>
-    );
+  return <>TODO Library page</>;
 }
 
 export default Library;

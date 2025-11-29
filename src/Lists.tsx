@@ -1,11 +1,7 @@
-import {JSX} from "react";
+import { JSX } from "react";
 
 function Lists(): JSX.Element {
-    return (
-        <>
-            TODO Lists page
-        </>
-    );
+  return <>TODO Lists page</>;
 }
 
 export default Lists;

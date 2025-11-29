@@ -1,223 +1,235 @@
-html,body{
-    height:100%;
-    margin:0;
+html,
+body {
+  height: 100%;
+  margin: 0;
 }
 
-body{
-    background:rgb(31, 31, 34);
-    color:white;
-    font-family:Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+body {
+  background: rgb(31, 31, 34);
+  color: white;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif,
+    Apple Color Emoji,
+    Segoe UI Emoji,
+    Segoe UI Symbol;
 }
 
-#root{
-    height:100%;
-    padding-top:60px;
+#root {
+  height: 100%;
+  padding-top: 60px;
 }
 
-header{
-    backdrop-filter: blur(4px);
-    background:rgba(17,17,17,0.9);
-    height:60px;
-    position:fixed;
-    top:0;
-    width:100%;
-    z-index:10000;
+header {
+  backdrop-filter: blur(4px);
+  background: rgba(17, 17, 17, 0.9);
+  height: 60px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 10000;
 
-    -webkit-backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
-aside{
-    backdrop-filter: blur(4px);
-    background-color: rgba(17, 17, 17, 0.9);
-    float: left;
-    height: 100%;
-    overflow-y:scroll;
-    position: fixed;
-    scrollbar-width: none;
-    transition: width .2s;
-    width: 100px;
+aside {
+  backdrop-filter: blur(4px);
+  background-color: rgba(17, 17, 17, 0.9);
+  float: left;
+  height: 100%;
+  overflow-y: scroll;
+  position: fixed;
+  scrollbar-width: none;
+  transition: width 0.2s;
+  width: 100px;
 
-    -webkit-backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
-aside.menu-open{
-    transition: width .2s;
-    width:250px;
+aside.menu-open {
+  transition: width 0.2s;
+  width: 250px;
 }
 
-aside ul.generic li{
-    list-style: none;
-    margin:0;
-    padding:0;
+aside ul.generic li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-aside ul.generic li a{
-    color:rgb(156, 163, 175);
-    font-size:12px;
+aside ul.generic li a {
+  color: rgb(156, 163, 175);
+  font-size: 12px;
 }
 
-aside ul.links li a{
-    color:rgb(156, 163, 175);
-    fill:transparent;
-    stroke:rgb(156, 163, 175);
+aside ul.links li a {
+  color: rgb(156, 163, 175);
+  fill: transparent;
+  stroke: rgb(156, 163, 175);
 }
 
-aside ul.links li.item-focus a{
-    background-color:#2bbb90;
-    color:white;
-    cursor:initial;
+aside ul.links li.item-focus a {
+  background-color: #2bbb90;
+  color: white;
+  cursor: initial;
 }
 
-aside ul.links li.item-focus:hover a{
-    color:white;
+aside ul.links li.item-focus:hover a {
+  color: white;
 }
 
-aside ul.links li.item-focus a svg{
-    stroke:white;
+aside ul.links li.item-focus a svg {
+  stroke: white;
 }
 
-aside ul.links li.item-focus:hover a svg{
-    stroke:white;
+aside ul.links li.item-focus:hover a svg {
+  stroke: white;
 }
 
-aside ul.links li:hover{
-    background-color:rgb(63, 63, 70);
+aside ul.links li:hover {
+  background-color: rgb(63, 63, 70);
 }
 
-aside ul.links li:hover a{
-    color:rgb(43, 187, 144);
-    stroke:rgb(43, 187, 144);
+aside ul.links li:hover a {
+  color: rgb(43, 187, 144);
+  stroke: rgb(43, 187, 144);
 }
 
-aside ul.links li a span{
-    display:block;
+aside ul.links li a span {
+  display: block;
 }
 
-aside ul.links li a{
-    font-size:10px;
-    text-align: center;
-    padding: 16px 0;
+aside ul.links li a {
+  font-size: 10px;
+  text-align: center;
+  padding: 16px 0;
 }
 
-aside.menu-open ul.links li a{
-    font-size:initial;
-    line-height:40px;
-    text-align: left;
-    padding: initial;
+aside.menu-open ul.links li a {
+  font-size: initial;
+  line-height: 40px;
+  text-align: left;
+  padding: initial;
 }
 
-aside.menu-open ul.links li a span{
-    display:inline-block;
+aside.menu-open ul.links li a span {
+  display: inline-block;
 }
 
-.hoverHeaderButton{
-    color:white;
+.hoverHeaderButton {
+  color: white;
 }
 
-.hoverHeaderButtonFill{
-    fill:white;
-    stroke:white;
-    transition: rotate .2s;
+.hoverHeaderButtonFill {
+  fill: white;
+  stroke: white;
+  transition: rotate 0.2s;
 }
 
-.hoverHeaderButtonFill.menu-open{
-    rotate:90deg;
-    transition: rotate .2s;
+.hoverHeaderButtonFill.menu-open {
+  rotate: 90deg;
+  transition: rotate 0.2s;
 }
 
-.hoverHeaderButton:hover{
-    color:rgb(43, 187, 144);
+.hoverHeaderButton:hover {
+  color: rgb(43, 187, 144);
 }
 
-.hoverHeaderButtonFill:not([disabled]):hover{
-    fill:rgb(43, 187, 144);
-    stroke:rgb(43, 187, 144);
+.hoverHeaderButtonFill:not([disabled]):hover {
+  fill: rgb(43, 187, 144);
+  stroke: rgb(43, 187, 144);
 }
 
-.hoverHeaderButtonFill[disabled]{
-    cursor:default;
-    opacity: .3;
+.hoverHeaderButtonFill[disabled] {
+  cursor: default;
+  opacity: 0.3;
 }
 
-header input:hover{
-    outline: #52525B solid 2px;
+header input:hover {
+  outline: #52525b solid 2px;
 }
 
-header input:focus-visible{
-    outline:rgb(43, 187, 144) solid 2px;
+header input:focus-visible {
+  outline: rgb(43, 187, 144) solid 2px;
 }
 
-main{
-    padding:16px;
+main {
+  padding: 16px;
 }
 
-aside:not(.menu-open) + main{
-    margin-left:100px;
-    transition: margin-left .2s;
+aside:not(.menu-open) + main {
+  margin-left: 100px;
+  transition: margin-left 0.2s;
 }
 
-aside.menu-open + main{
-    margin-left:250px;
-    transition: margin-left .2s;
+aside.menu-open + main {
+  margin-left: 250px;
+  transition: margin-left 0.2s;
 }
 
-.claim-preview-section{
-    text-align:center;
+.claim-preview-section {
+  text-align: center;
 }
 
-.claimPreviewTile{
-    color:inherit;
-    display:inline-block;
-    margin:10px;
-    text-decoration:none;
-    vertical-align:top;
-    width:280px;
+.claimPreviewTile {
+  color: inherit;
+  display: inline-block;
+  margin: 10px;
+  text-decoration: none;
+  vertical-align: top;
+  width: 280px;
 }
 
-.claimPreviewTileThumbnail{
-    background-color:black;
-    background-position:center;
-    background-repeat:no-repeat;
-    background-size:100%;
-    border-radius:10px;
-    height:168px;
-    transition: background-size 100ms linear;
+.claimPreviewTileThumbnail {
+  background-color: black;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  border-radius: 10px;
+  height: 168px;
+  transition: background-size 100ms linear;
 }
 
-.claimPreviewTileThumbnail:hover{
-    background-size:120%;
+.claimPreviewTileThumbnail:hover {
+  background-size: 120%;
 }
 
-.claimPreviewTileTitle{
-    margin:10px 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.claimPreviewTileTitle {
+  margin: 10px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
-.markdown img{
-    max-height:125px;
-    max-width:100%;
+.markdown img {
+  max-height: 125px;
+  max-width: 100%;
 }
 
-iframe{
-    max-width:100%;
+iframe {
+  max-width: 100%;
 }
 
-audio{
-    max-width:100%;
+audio {
+  max-width: 100%;
 }
 
-video{
-    max-width:100%;
+video {
+  max-width: 100%;
 }
 
-footer{
-    background:rgba(17,17,17,0.9);
-    color:white;
-    padding:8px;
-    text-align:center;
+footer {
+  background: rgba(17, 17, 17, 0.9);
+  color: white;
+  padding: 8px;
+  text-align: center;
 }

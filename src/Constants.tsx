@@ -1,1 +1,22 @@
-export const NOT_TAGS = ["porn","porno","nsfw","mature","xxx","sex","creampie","blowjob","handjob","vagina","boobs","big boobs","big dick","pussy","cumshot","anal","hard fucking","ass","fuck","hentai"];
+export const NOT_TAGS = [
+  "porn",
+  "porno",
+  "nsfw",
+  "mature",
+  "xxx",
+  "sex",
+  "creampie",
+  "blowjob",
+  "handjob",
+  "vagina",
+  "boobs",
+  "big boobs",
+  "big dick",
+  "pussy",
+  "cumshot",
+  "anal",
+  "hard fucking",
+  "ass",
+  "fuck",
+  "hentai",
+];

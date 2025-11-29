@@ -1,11 +1,7 @@
-import {JSX} from "react";
+import { JSX } from "react";
 
 function Following(): JSX.Element {
-    return (
-        <>
-            TODO Following page
-        </>
-    );
+  return <>TODO Following page</>;
 }
 
 export default Following;
