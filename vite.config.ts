@@ -18,6 +18,7 @@ const proxyConfig: ProxyOptions = {
       proxyReq.removeHeader('Origin');
     });
   },
+  secure: false,
 };
 
 export default defineConfig({

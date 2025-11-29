@@ -11,31 +11,43 @@ import NotFound from "./NotFound";
 
 import Aside from "./components/Aside";
 import Header from "./components/Header";
+import Following from "./Following";
+import Tags from "./Tags";
+import Discover from "./Discover";
+import Library from "./Library";
+import Lists from "./Lists";
 // import Footer from "./components/Footer";
 
 function App(): JSX.Element{
     const [isMenuOpen,setMenuOpen] = useState(false);
+    const [isMenuShown] = useState(true);
 
-   return (
-       <StrictMode>
-           <AppRouter>
-               <Header menuOpen={isMenuOpen} menuOpenSetter={setMenuOpen}/>
-               <Aside open={isMenuOpen}/>
-               <main>
-                   <Routes>
-                       <Route index path="/" element={<Home/>}/>
-                       <Route path="/about" element={<Home/>}/>
-                       <Route path="/claim/*" element={<ClaimPage/>}/>
-                       <Route path="/wallet" element={<WalletPage/>}/>
-                       <Route path="/search" element={<SearchPage/>}/>
-                       <Route path="/settings" element={<SettingsPage/>}/>
-                       <Route path="*" element={<NotFound/>}/>
-                   </Routes>
-               </main>
-               {/*<Footer/>*/}
-           </AppRouter>
-       </StrictMode>
-   );
+    return (
+        <StrictMode>
+            <AppRouter>
+                <Header menuOpen={isMenuOpen} menuOpenSetter={setMenuOpen}/>
+                {isMenuShown?<Aside open={isMenuOpen}/>:null}
+                <main>
+                    <Routes>
+                        <Route index path="/" element={<Home/>}/>
+                        <Route index path="/following" element={<Following/>}/>
+                        <Route index path="/tags" element={<Tags/>}/>
+                        <Route index path="/discover" element={<Discover/>}/>
+                        <Route index path="/library" element={<Library/>}/>
+                        <Route index path="/lists" element={<Lists/>}/>
+
+                        <Route path="/claim/*" element={<ClaimPage/>}/>
+                        <Route path="/wallet" element={<WalletPage/>}/>
+                        <Route path="/search" element={<SearchPage/>}/>
+                        <Route path="/settings" element={<SettingsPage/>}/>
+
+                        <Route path="*" element={<NotFound/>}/>
+                    </Routes>
+                </main>
+                {/*<Footer/>*/}
+            </AppRouter>
+        </StrictMode>
+    );
 }
 
 export default App;

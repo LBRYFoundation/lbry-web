@@ -1,11 +1,10 @@
 import {JSX, useEffect, useState} from "react";
-
 import LBRY from "./LBRY";
 import ClaimPreviewTile from "./components/ClaimPreviewTile";
 import useDaemonRPC from "./DaemonRPC";
 import {NOT_TAGS} from "./Constants";
 
-function Home(): JSX.Element {
+function Following(): JSX.Element {
     const daemonRPC: string = useDaemonRPC();
 
     const [row1,setRow1] = useState([]);
@@ -53,4 +52,4 @@ function Home(): JSX.Element {
     );
 }
 
-export default Home;
+export default Following;

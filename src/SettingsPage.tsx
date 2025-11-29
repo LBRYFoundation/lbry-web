@@ -1,15 +1,18 @@
 import {JSX, useEffect, useState} from "react";
 
 import LBRY from "./LBRY";
+import useDaemonRPC from "./DaemonRPC";
 
 function SettingsPage(){
+    const daemonRPC: string = useDaemonRPC();
+
     const [settings,setSettings]: [object,(value: object) => object] = useState();
 
     useEffect((): void => {
-        LBRY.rpc(import.meta.env.VITE_DAEMON_DEFAULT,'settings_get',null,null,import.meta.env.VITE_DAEMON_PROXY==='true').then((json: object): void => {
+        LBRY.rpc(daemonRPC,'settings_get',null,null,import.meta.env.VITE_DAEMON_PROXY==='true').then((json: object): void => {
             setSettings(json.result || json.error?.message || 'Unknown error');
         });
-    },[]);
+    },[daemonRPC]);
 
     return (
         <>

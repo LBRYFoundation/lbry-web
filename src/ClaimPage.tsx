@@ -3,6 +3,7 @@ import Markdown from 'react-markdown';
 import {Params, useParams} from "react-router";
 
 import LBRY from "./LBRY";
+import useDaemonRPC from "./DaemonRPC";
 
 function downloadMarkdownFile(claimGetData,setMarkdown): void{
     const url: string = claimGetData?.streaming_url;
@@ -17,6 +18,8 @@ function downloadMarkdownFile(claimGetData,setMarkdown): void{
 }
 
 function SettingsPage(): JSX.Element{
+    const daemonRPC: string = useDaemonRPC();
+
     const params: Params<string> = useParams();
     const claim: string = params['*'];
 
@@ -24,17 +27,17 @@ function SettingsPage(): JSX.Element{
     const [claimResolveData,setClaimResolveData] = useState(null);
     const [markdown,setMarkdown] = useState('');
 
-    useEffect(() => {
-        LBRY.rpc(import.meta.env.VITE_DAEMON_DEFAULT,'resolve',{urls:[claim]},null,import.meta.env.VITE_DAEMON_PROXY==='true').then((json: object): void => {
+    useEffect((): void => {
+        LBRY.rpc(daemonRPC,'resolve',{urls:[claim]},null,import.meta.env.VITE_DAEMON_PROXY==='true').then((json: object): void => {
             setClaimResolveData(json.result[claim] ?? null);
         });
-    }, [claim]);
+    }, [claim,daemonRPC]);
 
-    useEffect(() => {
-        LBRY.rpc(import.meta.env.VITE_DAEMON_DEFAULT,'get',{uri:claim},null,import.meta.env.VITE_DAEMON_PROXY==='true').then((json: object): void => {
+    useEffect((): void => {
+        LBRY.rpc(daemonRPC,'get',{uri:claim},null,import.meta.env.VITE_DAEMON_PROXY==='true').then((json: object): void => {
             setClaimGetData(json.result);
         });
-    }, [claim]);
+    }, [claim,daemonRPC]);
 
     if(claimResolveData?.type==='claim'){
         if(claimResolveData.value_type==='channel'){

@@ -2,30 +2,33 @@ import {JSX, useEffect, useState} from "react";
 import {Link} from "react-router";
 
 import LBRY from "./LBRY";
+import useDaemonRPC from "./DaemonRPC";
 
 function WalletPage(){
+    const daemonRPC: string = useDaemonRPC();
+
     const [wallet,setWallet] = useState(null);
     const [transactions,setTransactions] = useState([]);
 
     useEffect((): void => {
-        LBRY.rpc(import.meta.env.VITE_DAEMON_DEFAULT,'wallet_balance',null,null,import.meta.env.VITE_DAEMON_PROXY==='true').then(json => {
+        LBRY.rpc(daemonRPC,'wallet_balance',null,null,import.meta.env.VITE_DAEMON_PROXY==='true').then(json => {
             if(json.error){
                 document.getElementById('wallet').innerHTML = json.error.message;
                 return;
             }
             setWallet(json.result);
         });
-    },[]);
+    },[daemonRPC]);
 
     useEffect((): void => {
-        LBRY.rpc(import.meta.env.VITE_DAEMON_DEFAULT,'txo_list',null,null,import.meta.env.VITE_DAEMON_PROXY==='true').then(json => {
+        LBRY.rpc(daemonRPC,'txo_list',null,null,import.meta.env.VITE_DAEMON_PROXY==='true').then(json => {
             if(json.error){
                 document.getElementById('transactions').innerHTML = json.error.message;
                 return;
             }
             setTransactions(json.result?.items || []);
         });
-    },[]);
+    },[daemonRPC]);
 
     return (
         <>

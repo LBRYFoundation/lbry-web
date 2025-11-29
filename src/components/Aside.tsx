@@ -1,9 +1,9 @@
 import React, {JSX} from "react";
-import {Link, NavLink} from "react-router";
+import {Link, Location, NavLink, useLocation} from "react-router";
 import CustomSVG from "./CustomSVG";
 
 function Aside({open}): JSX.Element {
-
+    const location: Location = useLocation();
 
     return (
         <aside className={open ? 'menu-open' : null}>
