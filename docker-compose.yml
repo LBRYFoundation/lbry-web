@@ -1,0 +1,8 @@
+services:
+  web:
+    build:
+      dockerfile: Dockerfile
+    container_name: lbry-web
+    network_mode: host
+    env_file: .env
+    restart: always

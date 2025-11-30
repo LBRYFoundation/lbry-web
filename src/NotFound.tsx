@@ -1,5 +1,3 @@
-import { StaticRouter } from "react-router";
-
 function NotFound() {
   if (import.meta.env.SSR) {
     throw new Error("404_NOT_FOUND");
