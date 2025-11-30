@@ -1,7 +1,11 @@
 import React, { JSX } from "react";
 import type Props from "react";
 
-function CustomSVG({ icon, viewBox, style }: Props): JSX.Element {
+function CustomSVG({
+  icon,
+  viewBox,
+  style,
+}: Props & { icon: string; viewBox: string; style: object }): JSX.Element {
   let element = null;
 
   if (icon === "account") {

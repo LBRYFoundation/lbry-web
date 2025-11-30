@@ -1,7 +1,9 @@
-import { JSX } from "react";
+import Props, { JSX } from "react";
 import { NavLink } from "react-router";
 
-function ClaimPreviewTile({ claim }): JSX.Element {
+function ClaimPreviewTile({
+  claim,
+}: Props & { claim: object[unknown]; key?: number }): JSX.Element {
   return (
     <NavLink
       to={`/claim/${claim.canonical_url?.replaceAll("lbry://", "").replaceAll("#", ":")}`}

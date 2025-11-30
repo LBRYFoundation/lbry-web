@@ -1,16 +1,20 @@
+import type Express from "@types/express";
+import type { NextFunction } from "@types/express";
+import { configDotenv } from "dotenv";
 import express from "express";
+import http, { Server } from "http";
 import path from "path";
 
 const app: Express.Application = express();
 
-process.loadEnvFile();
+configDotenv({ override: true, quiet: true });
 
 app.use(express.json());
 app.use(express.static("dist"));
 
 app.get(
   "/api/proxy",
-  (req: Express.Request, res: Express.Response, next): void => {
+  (req: Express.Request, res: Express.Response, next: NextFunction): void => {
     if (!req.query.url) {
       res.header("Content-Type", "text/plain").status(400).send("Error");
       return;
@@ -40,7 +44,7 @@ app.get(
 
 app.post(
   "/api/rpc",
-  (req: Express.Request, res: Express.Response, next): void => {
+  (req: Express.Request, res: Express.Response, next: NextFunction): void => {
     if (!req.query.url) {
       res.json({
         jsonrpc: "2.0",
@@ -81,6 +85,6 @@ app.get("*fallback", (_, res: Express.Response): void => {
   res.sendFile(path.join(path.resolve(), "dist/index.html"));
 });
 
-const server = app.listen(3000);
+const server: Server = http.createServer(app).listen(3000);
 
 export default server;

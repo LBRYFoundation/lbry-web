@@ -1,9 +1,8 @@
 import react from "@vitejs/plugin-react";
 import type EventEmitter from "events";
-import type ClientRequest from "http";
+import http from "http";
 import path from "path";
-import { defineConfig } from "vite";
-import type ProxyOptions from "vite";
+import { defineConfig, ProxyOptions } from "vite";
 
 const proxyConfig: ProxyOptions = {
   // Only for development
@@ -15,7 +14,7 @@ const proxyConfig: ProxyOptions = {
       options.target = url.origin;
       return url.pathname + url.search;
     };
-    proxy.on("proxyReq", (proxyReq: ClientRequest): void => {
+    proxy.on("proxyReq", (proxyReq: http.ClientRequest): void => {
       proxyReq.removeHeader("Origin");
     });
   },
@@ -32,7 +31,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "~": path.resolve(__dirname, "src"),
+      "~": path.resolve("src"),
     },
   },
 });
