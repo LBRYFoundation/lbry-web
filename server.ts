@@ -2,15 +2,21 @@ import type Express from "@types/express";
 import type { NextFunction } from "@types/express";
 import { configDotenv } from "dotenv";
 import express from "express";
+import fs from "fs";
 import http, { Server } from "http";
 import path from "path";
+import process from "process";
+import React, { ReactNode } from "react";
+import { renderToString } from "react-dom/server";
+import App from "~/App";
 
 const app: Express.Application = express();
 
 configDotenv({ override: true, quiet: true });
 
 app.use(express.json());
-app.use(express.static("dist"));
+app.use("/assets", express.static("dist/assets"));
+app.use("/favicon.ico", express.static("dist/favicon.ico"));
 
 app.get(
   "/api/proxy",
@@ -81,10 +87,38 @@ app.post(
   },
 );
 
-app.get("*fallback", (_, res: Express.Response): void => {
-  res.sendFile(path.join(path.resolve(), "dist/index.html"));
+//app.use(vite.middlewares);
+
+app.use("*all", (req: Express.Request, res: Express.Response): void => {
+  const url: string = req.originalUrl;
+
+  const app: ReactNode = React.createElement(App, { url: url });
+
+  const indexPath: string = path.join(path.resolve(), "dist/index.html");
+
+  let isNotFound: boolean = false;
+
+  let rendered: string;
+  try {
+    rendered = renderToString(app);
+  } catch (e) {
+    if (e.message === "404_NOT_FOUND") {
+      isNotFound = true;
+      rendered = "<span>404 - Not found</span>";
+    }
+  }
+
+  const template: string = fs.readFileSync(indexPath, "utf-8");
+
+  const html: string = template.replace("<!--root-->", rendered);
+
+  res.status(isNotFound ? 404 : 200).send(html);
 });
 
-const server: Server = http.createServer(app).listen(3000);
+const port: number = parseInt(process.env.SERVER_PORT) || 3000;
+
+const server: Server = http.createServer(app).listen(port, (): void => {
+  console.info(`Server is running in port ${port}.`);
+});
 
 export default server;

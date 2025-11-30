@@ -19,21 +19,21 @@ function useAppHistory(): object {
     if (navigationType === NavigationType.Push) {
       stack.current.splice(index + 1);
       stack.current.push(location);
-      idx.current = history.state.idx;
+      idx.current = history.state?.idx;
       setIndex(index + 1); // eslint-disable-line
     }
     if (navigationType === NavigationType.Pop) {
-      if (idx.current > history.state.idx) {
+      if (idx.current > history.state?.idx) {
         setIndex(index - 1);
       }
-      if (idx.current < history.state.idx) {
+      if (idx.current < history.state?.idx) {
         setIndex(index + 1);
       }
-      idx.current = history.state.idx;
+      idx.current = history.state?.idx;
     }
     if (navigationType === NavigationType.Replace) {
       stack.current[index] = location;
-      idx.current = history.state.idx;
+      idx.current = history.state?.idx;
     }
   }, [location, navigationType]); // eslint-disable-line
 

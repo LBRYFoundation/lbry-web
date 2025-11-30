@@ -18,7 +18,7 @@ function WalletPage() {
       import.meta.env.VITE_DAEMON_PROXY === "true",
     ).then((json) => {
       if (json.error) {
-        document.getElementById("wallet").innerHTML = json.error.message;
+        //document.getElementById("wallet").innerHTML = json.error.message;
         return;
       }
       setWallet(json.result);
@@ -34,7 +34,7 @@ function WalletPage() {
       import.meta.env.VITE_DAEMON_PROXY === "true",
     ).then((json) => {
       if (json.error) {
-        document.getElementById("transactions").innerHTML = json.error.message;
+        //document.getElementById("transactions").innerHTML = json.error.message;
         return;
       }
       setTransactions(json.result?.items || []);

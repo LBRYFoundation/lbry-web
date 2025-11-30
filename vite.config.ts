@@ -2,7 +2,7 @@ import react from "@vitejs/plugin-react";
 import type EventEmitter from "events";
 import http from "http";
 import path from "path";
-import { defineConfig, ProxyOptions } from "vite";
+import { ConfigEnv, defineConfig, ProxyOptions, UserConfig } from "vite";
 
 const proxyConfig: ProxyOptions = {
   // Only for development
@@ -21,17 +21,22 @@ const proxyConfig: ProxyOptions = {
   secure: false,
 };
 
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    proxy: {
-      "/api/proxy": proxyConfig,
-      "/api/rpc": proxyConfig,
+export default defineConfig((config: ConfigEnv): UserConfig => {
+  return {
+    build: {
+      outDir: config.isSsrBuild ? "dist-ssr" : undefined,
     },
-  },
-  resolve: {
-    alias: {
-      "~": path.resolve("src"),
+    plugins: [react()],
+    server: {
+      proxy: {
+        "/api/proxy": proxyConfig,
+        "/api/rpc": proxyConfig,
+      },
     },
-  },
+    resolve: {
+      alias: {
+        "~": path.resolve("src"),
+      },
+    },
+  };
 });

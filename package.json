@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && vite build --ssr server.ts",
     "preview": "vite preview",
     "test": "eslint",
-    "start": "node server.ts"
+    "start": "node dist-ssr/server.js"
   },
   "dependencies": {
     "dotenv": "^17.2.3",
