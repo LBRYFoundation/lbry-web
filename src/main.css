@@ -210,6 +210,11 @@ aside.menu-open + main {
   -webkit-line-clamp: 2;
 }
 
+.markdown {
+  font-family: Georgia, serif;
+  font-size: 20px;
+}
+
 .markdown img {
   max-height: 125px;
   max-width: 100%;
@@ -232,4 +237,26 @@ footer {
   color: white;
   padding: 8px;
   text-align: center;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

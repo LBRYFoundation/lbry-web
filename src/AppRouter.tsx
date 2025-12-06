@@ -4,9 +4,9 @@ import { BrowserRouter, MemoryRouter, StaticRouter } from "react-router";
 const isElectron: boolean = false; // TODO Add detection
 
 function AppRouter({
-                     url,
-                     children,
-                   }: PropsWithChildren & { url?: string }): JSX.Element {
+  url,
+  children,
+}: PropsWithChildren & { url?: string }): JSX.Element {
   if (isElectron) {
     return <MemoryRouter>{children}</MemoryRouter>;
   }

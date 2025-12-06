@@ -3,6 +3,7 @@ import { NOT_TAGS } from "~/Constants";
 import useDaemonRPC from "~/DaemonRPC";
 import LBRY from "~/LBRY";
 import ClaimPreviewTile from "~/components/ClaimPreviewTile";
+import Loader from "~/components/Loader";
 
 function Home(): JSX.Element {
   const daemonRPC: string = useDaemonRPC();
@@ -89,9 +90,10 @@ function Home(): JSX.Element {
   return (
     <>
       <div className="claim-preview-section">
-        {row1.map((cell: unknown, i: number) => (
-          <ClaimPreviewTile claim={cell} key={i} />
-        ))}
+        {(row1 &&
+          row1.map((cell: unknown, i: number) => (
+            <ClaimPreviewTile claim={cell} key={i} />
+          ))) || <Loader />}
       </div>
       {row2.length > 0 ? <h2>Top Content from Today</h2> : null}
       <div className="claim-preview-section">
