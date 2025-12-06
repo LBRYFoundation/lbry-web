@@ -7,7 +7,7 @@ function WalletPage() {
   const daemonRPC: string = useDaemonRPC();
 
   const [wallet, setWallet] = useState(null);
-  const [transactions, setTransactions] = useState([]);
+  const [transactions, setTransactions] = useState<object[]>([]);
 
   useEffect((): void => {
     LBRY.rpc(
@@ -16,9 +16,8 @@ function WalletPage() {
       null,
       null,
       import.meta.env.VITE_DAEMON_PROXY === "true",
-    ).then((json) => {
+    ).then((json: object): void => {
       if (json.error) {
-        //document.getElementById("wallet").innerHTML = json.error.message;
         return;
       }
       setWallet(json.result);
@@ -32,9 +31,8 @@ function WalletPage() {
       null,
       null,
       import.meta.env.VITE_DAEMON_PROXY === "true",
-    ).then((json) => {
+    ).then((json: object): void => {
       if (json.error) {
-        //document.getElementById("transactions").innerHTML = json.error.message;
         return;
       }
       setTransactions(json.result?.items || []);

@@ -7,7 +7,7 @@ import ClaimPreviewTile from "~/components/ClaimPreviewTile";
 function CollectionClaim({ data }: Props & { data: Collection }): JSX.Element {
   const daemonRPC: string = useDaemonRPC();
 
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<object[]>([]);
 
   useEffect((): void => {
     LBRY.rpc(
@@ -15,7 +15,8 @@ function CollectionClaim({ data }: Props & { data: Collection }): JSX.Element {
       "resolve",
       {
         urls: data.value.claims.map(
-          (claim: string): string => `lbry://${data.signing_channel.name}:${claim}`,
+          (claim: string): string =>
+            `lbry://${data.signing_channel.name}:${claim}`,
         ),
         include_purchase_receipt: true,
       },
@@ -38,9 +39,11 @@ function CollectionClaim({ data }: Props & { data: Collection }): JSX.Element {
         </Link>
       </span>
       <div style={{ textAlign: "center" }}>
-        {items.map((item: object[unknown], i: number): JSX.Element => (
-          <ClaimPreviewTile claim={item} key={i} />
-        ))}
+        {items.map(
+          (item: object[unknown], i: number): JSX.Element => (
+            <ClaimPreviewTile claim={item} key={i} />
+          ),
+        )}
       </div>
     </div>
   );

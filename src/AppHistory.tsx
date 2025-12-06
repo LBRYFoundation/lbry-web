@@ -12,7 +12,7 @@ function useAppHistory(): object {
 
   const idx: RefObject<number> = useRef<number>(-1);
 
-  const [index, setIndex] = useState(-1);
+  const [index, setIndex] = useState<number>(-1);
   const stack: RefObject<object[]> = useRef<object[]>([location]);
 
   useEffect((): void => {

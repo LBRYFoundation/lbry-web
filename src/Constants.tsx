@@ -1,4 +1,4 @@
-export const NOT_TAGS = [
+export const NOT_TAGS: string[] = [
   "porn",
   "porno",
   "nsfw",

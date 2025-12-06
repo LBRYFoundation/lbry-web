@@ -12,7 +12,7 @@ function SearchPage(): JSX.Element {
   const query: string | null = new URLSearchParams(location.search).get("q");
 
   const [resolveItem, setResolveItem] = useState(null);
-  const [channelSearchItems, setChannelSearchItems] = useState([]);
+  const [channelSearchItems, setChannelSearchItems] = useState<object[]>([]);
 
   useEffect((): void => {
     LBRY.rpc(
@@ -24,7 +24,7 @@ function SearchPage(): JSX.Element {
       },
       null,
       import.meta.env.VITE_DAEMON_PROXY === "true",
-    ).then((json) => {
+    ).then((json: object): void => {
       if (
         json.result["lbry://" + query] &&
         !json.result["lbry://" + query].error
@@ -55,7 +55,7 @@ function SearchPage(): JSX.Element {
       },
       null,
       import.meta.env.VITE_DAEMON_PROXY === "true",
-    ).then((json) => {
+    ).then((json: object): void => {
       setChannelSearchItems(json.result.items);
     });
   }, [daemonRPC, query]);

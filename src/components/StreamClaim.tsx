@@ -19,7 +19,7 @@ function StreamClaim({ data }: Props & { data: Stream }): JSX.Element {
   const daemonRPC: string = useDaemonRPC();
 
   const [claimGetData, setClaimGetData] = useState(null);
-  const [markdown, setMarkdown] = useState("");
+  const [markdown, setMarkdown] = useState<string>("");
 
   useEffect((): void => {
     LBRY.rpc(

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 function useDaemonRPC(): string {
-  const [daemon, setDaemon] = useState(
+  const [daemon, setDaemon] = useState<string>(
     new URL(import.meta.env.VITE_DAEMON_STATIC).toString(),
   );
 

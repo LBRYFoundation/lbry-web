@@ -8,9 +8,9 @@ import Loader from "~/components/Loader";
 function Home(): JSX.Element {
   const daemonRPC: string = useDaemonRPC();
 
-  const [row1, setRow1] = useState([]);
-  const [row2, setRow2] = useState([]);
-  const [row3, setRow3] = useState([]);
+  const [row1, setRow1] = useState<object[]>([]);
+  const [row2, setRow2] = useState<object[]>([]);
+  const [row3, setRow3] = useState<object[]>([]);
 
   useEffect((): void => {
     LBRY.rpc(
@@ -34,7 +34,7 @@ function Home(): JSX.Element {
       },
       null,
       import.meta.env.VITE_DAEMON_PROXY === "true",
-    ).then((json) => {
+    ).then((json: object): void => {
       setRow1(json.result.items);
     });
   }, [daemonRPC]);
@@ -59,7 +59,7 @@ function Home(): JSX.Element {
       },
       null,
       import.meta.env.VITE_DAEMON_PROXY === "true",
-    ).then((json) => {
+    ).then((json: object): void => {
       setRow2(json.result.items);
     });
   }, [daemonRPC]);
@@ -82,7 +82,7 @@ function Home(): JSX.Element {
       },
       null,
       import.meta.env.VITE_DAEMON_PROXY === "true",
-    ).then((json) => {
+    ).then((json: object): void => {
       setRow3(json.result.items);
     });
   }, [daemonRPC]);

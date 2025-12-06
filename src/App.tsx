@@ -8,8 +8,8 @@ import Header from "~/components/Header";
 // import Footer from "~/components/Footer";
 
 function App({ url }: Props & { url?: string }): JSX.Element {
-  const [isMenuOpen, setMenuOpen] = useState(false);
-  const [isMenuShown] = useState(true);
+  const [isMenuOpen, setMenuOpen] = useState<boolean>(false);
+  const [isMenuShown] = useState<boolean>(true);
 
   return (
     <StrictMode>

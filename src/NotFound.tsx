@@ -1,4 +1,6 @@
-function NotFound() {
+import { JSX } from "react";
+
+function NotFound(): JSX.Element {
   if (import.meta.env.SSR) {
     throw new Error("404_NOT_FOUND");
   }

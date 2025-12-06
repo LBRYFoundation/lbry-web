@@ -10,9 +10,9 @@ import Error from "~/components/Error";
 function ChannelClaim({ data }: Props & { data: Channel }): JSX.Element {
   const daemonRPC: string = useDaemonRPC();
 
-  const [tab, setTab] = useState("content");
-  const [content, setContent] = useState([]);
-  const [playlists, setPlaylists] = useState([]);
+  const [tab, setTab] = useState<string>("content");
+  const [content, setContent] = useState<object[]>([]);
+  const [playlists, setPlaylists] = useState<object[]>([]);
 
   useEffect((): void => {
     LBRY.rpc(
@@ -33,7 +33,7 @@ function ChannelClaim({ data }: Props & { data: Channel }): JSX.Element {
       },
       null,
       import.meta.env.VITE_DAEMON_PROXY === "true",
-    ).then(async (json: object) => {
+    ).then((json: object): void => {
       setContent(json.result.items);
     });
   }, [data.claim_id, daemonRPC]);
@@ -57,7 +57,7 @@ function ChannelClaim({ data }: Props & { data: Channel }): JSX.Element {
       },
       null,
       import.meta.env.VITE_DAEMON_PROXY === "true",
-    ).then(async (json: object) => {
+    ).then((json: object): void => {
       setPlaylists(json.result.items);
     });
   }, [data.claim_id, daemonRPC]);
@@ -67,7 +67,7 @@ function ChannelClaim({ data }: Props & { data: Channel }): JSX.Element {
       <div id="channel-header">
         <div
           style={{
-              backgroundColor:'black',
+            backgroundColor: "black",
             backgroundImage: `url(${data.value.cover?.url})`,
             backgroundSize: "cover",
             borderTopLeftRadius: "6px",
@@ -78,12 +78,16 @@ function ChannelClaim({ data }: Props & { data: Channel }): JSX.Element {
           <div
             style={{
               backgroundImage:
-                "linear-gradient(to right, black,transparent 50%)",height:'100%',
+                "linear-gradient(to right, black,transparent 50%)",
+              height: "100%",
             }}
           >
             <img
               alt="Channel Logo"
-              src={data.value.thumbnail?.url || 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='}
+              src={
+                data.value.thumbnail?.url ||
+                "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+              }
               style={{
                 borderRadius: "100%",
                 height: "160px",
@@ -170,13 +174,13 @@ function ChannelClaim({ data }: Props & { data: Channel }): JSX.Element {
       <div style={{ paddingTop: "32px" }}>
         {tab === "content" ? (
           <div style={{ textAlign: "center" }}>
-            {content.map((item, i: number) => (
+            {content.map((item: object, i: number) => (
               <ClaimPreviewTile claim={item} key={i} />
             ))}
           </div>
         ) : null}
         {tab === "playlists"
-          ? playlists.map((item, i: number) => (
+          ? playlists.map((item: object, i: number) => (
               <ClaimPreviewTile claim={item} key={i} />
             ))
           : null}

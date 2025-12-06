@@ -18,7 +18,7 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
   const navigate: NavigateFunction = useNavigate();
 
   const urlQuery = new URLSearchParams(location.search).get("q") || "";
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState<string>("");
 
   useEffect((): void => {
     setQuery(urlQuery);
