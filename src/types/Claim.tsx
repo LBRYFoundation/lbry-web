@@ -17,12 +17,17 @@ interface Claim {
   timestamp: number;
   txid: string;
   value: object[unknown];
-  value_type: "channel" | "repost" | "stream";
+  value_type: "channel" | "collection" | "repost" | "stream";
 }
 
 interface Channel extends Claim {
   has_signing_key: boolean;
   value_type: "channel";
+}
+
+interface Collection extends Claim {
+  signing_channel?: Channel;
+  value_type: "collection";
 }
 
 interface Repost extends Claim {

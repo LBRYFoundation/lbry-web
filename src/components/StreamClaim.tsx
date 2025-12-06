@@ -33,6 +33,71 @@ function StreamClaim({ data }: Props & { data: Stream }): JSX.Element {
     });
   }, [data, daemonRPC]);
 
+  //
+  const [recommendedIsChannelItems, setRecommendedIsChannelItems] =
+    useState(false);
+
+  // return (
+  //   <div style={{ display: "flex" }}>
+  //     <div style={{ flex: "1" }}>
+  //       <div id="claim">
+  //         {claimResolveData ? (
+  //           claimResolveData.type === "claim" ? (
+  //             <Claim data={claimResolveData} />
+  //           ) : (
+  //             <Error message="Type isn't a claim." />
+  //           )
+  //         ) : (
+  //           <Loader />
+  //         )}
+  //       </div>
+  //       <div id="comments" style={{ paddingTop: "16px", textAlign: "center" }}>
+  //         Cannot load comments
+  //       </div>
+  //     </div>
+  //     <div id="recommended" style={{ width: "375px" }}>
+  //       <div>
+  //         <span
+  //           onClick={() => setRecommendedIsChannelItems(false)}
+  //           style={{
+  //             backgroundColor: recommendedIsChannelItems
+  //               ? "rgba(17, 17, 17, 0.4)"
+  //               : "rgb(17, 17, 17)",
+  //             borderRadius: "16px",
+  //             cursor: "pointer",
+  //             display: "inline-block",
+  //             fontSize: "14px",
+  //             lineHeight: "32px",
+  //             padding: "0 12px",
+  //           }}
+  //         >
+  //           Related
+  //         </span>
+  //         &nbsp;
+  //         <span
+  //           onClick={() => setRecommendedIsChannelItems(true)}
+  //           style={{
+  //             backgroundColor: recommendedIsChannelItems
+  //               ? "rgb(17, 17, 17)"
+  //               : "rgba(17, 17, 17, 0.4)",
+  //             borderRadius: "16px",
+  //             cursor: "pointer",
+  //             display: "inline-block",
+  //             fontSize: "14px",
+  //             lineHeight: "32px",
+  //             padding: "0 12px",
+  //           }}
+  //         >
+  //           More from this channel
+  //         </span>
+  //       </div>
+  //       <div style={{ padding: "16px", textAlign: "center" }}>
+  //         Cannot load recommendations.
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
+
   return (
     <div>
       <h1>{data.value?.title}</h1>
