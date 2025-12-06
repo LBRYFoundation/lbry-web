@@ -67,7 +67,8 @@ function ChannelClaim({ data }: Props & { data: Channel }): JSX.Element {
       <div id="channel-header">
         <div
           style={{
-            backgroundImage: `url(${data.value.cover.url})`,
+              backgroundColor:'black',
+            backgroundImage: `url(${data.value.cover?.url})`,
             backgroundSize: "cover",
             borderTopLeftRadius: "6px",
             borderTopRightRadius: "6px",
@@ -77,12 +78,12 @@ function ChannelClaim({ data }: Props & { data: Channel }): JSX.Element {
           <div
             style={{
               backgroundImage:
-                "linear-gradient(to right, black,transparent 50%)",
+                "linear-gradient(to right, black,transparent 50%)",height:'100%',
             }}
           >
             <img
               alt="Channel Logo"
-              src={data.value.thumbnail.url}
+              src={data.value.thumbnail?.url || 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='}
               style={{
                 borderRadius: "100%",
                 height: "160px",

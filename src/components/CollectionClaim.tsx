@@ -15,13 +15,13 @@ function CollectionClaim({ data }: Props & { data: Collection }): JSX.Element {
       "resolve",
       {
         urls: data.value.claims.map(
-          (claim) => `lbry://${data.signing_channel.name}:${claim}`,
+          (claim: string): string => `lbry://${data.signing_channel.name}:${claim}`,
         ),
         include_purchase_receipt: true,
       },
       null,
       import.meta.env.VITE_DAEMON_PROXY === "true",
-    ).then((json) => {
+    ).then((json: object[unknown]): void => {
       setItems(Object.values(json.result));
     });
   }, [daemonRPC]);
@@ -38,7 +38,7 @@ function CollectionClaim({ data }: Props & { data: Collection }): JSX.Element {
         </Link>
       </span>
       <div style={{ textAlign: "center" }}>
-        {items.map((item, i: number) => (
+        {items.map((item: object[unknown], i: number): JSX.Element => (
           <ClaimPreviewTile claim={item} key={i} />
         ))}
       </div>
