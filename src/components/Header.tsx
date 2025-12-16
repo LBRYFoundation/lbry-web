@@ -17,22 +17,25 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
   const location: Location = useLocation();
   const navigate: NavigateFunction = useNavigate();
 
-  const urlQuery = new URLSearchParams(location.search).get("q") || "";
+  const urlQuery: string = new URLSearchParams(location.search).get("q") || "";
   const [query, setQuery] = useState<string>("");
 
   useEffect((): void => {
     setQuery(urlQuery);
   }, [urlQuery]);
 
-  function handleSubmitSearch(event): boolean {
+  function handleSubmitSearch(event: SubmitEvent): boolean {
     event.preventDefault();
-    const input: HTMLInputElement = event.target.elements[0];
+    const form: HTMLFormElement = event.target as HTMLFormElement;
+    const formData: FormData = new FormData(form);
+    const query: string = formData.get("q") as string;
+
     const options: NavigateOptions = {
       state: {
-        q: input.value,
+        q: query,
       },
     };
-    navigate(`/search?q=${encodeURIComponent(input.value)}`, options);
+    navigate(form.action + `?q=${encodeURIComponent(query)}`, options);
     return false;
   }
 
@@ -156,6 +159,7 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
           </NavLink>
           <div style={{ display: "inline-block", height: "40px" }}>
             <form
+              action="/search"
               onSubmit={handleSubmitSearch}
               style={{
                 height: "100%",
@@ -178,6 +182,7 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
                 viewBox="0 0 24 24"
               />
               <input
+                name="q"
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   setQuery(e.target.value)
                 }
