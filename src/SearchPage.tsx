@@ -11,19 +11,19 @@ function SearchPage(): JSX.Element {
 
   const query: string | null = new URLSearchParams(location.search).get("q");
 
-  const [resolveItem, setResolveItem] = useState(null);
+  const [resolveItem, setResolveItem] = useState<object>(null);
   const [channelSearchItems, setChannelSearchItems] = useState<object[]>([]);
 
   useEffect((): void => {
     LBRY.rpc(
       daemonRPC,
-      "resolve",
+      LBRY.RESOLVE,
       {
         urls: ["lbry://" + query, "lbry://@" + query],
         include_purchase_receipt: true,
       },
       null,
-      import.meta.env.VITE_DAEMON_PROXY === "true",
+      LBRY.isUsingProxy(),
     ).then((json: object): void => {
       if (
         json.result["lbry://" + query] &&
@@ -45,7 +45,7 @@ function SearchPage(): JSX.Element {
   useEffect((): void => {
     LBRY.rpc(
       daemonRPC,
-      "claim_search",
+      LBRY.CLAIM_SEARCH,
       {
         page_size: 20,
         claim_type: ["channel", "stream"],
@@ -54,7 +54,7 @@ function SearchPage(): JSX.Element {
         text: query,
       },
       null,
-      import.meta.env.VITE_DAEMON_PROXY === "true",
+      LBRY.isUsingProxy(),
     ).then((json: object): void => {
       setChannelSearchItems(json.result.items);
     });

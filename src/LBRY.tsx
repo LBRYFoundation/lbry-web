@@ -1,7 +1,18 @@
 const VERSION_2_0: string = "2.0";
 
+const CLAIM_SEARCH: string = "claim_search";
+const GET: string = "get";
+const RESOLVE: string = "resolve";
+const SETTINGS_GET: string = "settings_get";
+const TXO_LIST: string = "txo_list";
+const WALLET_BALANCE: string = "wallet_balance";
+
 function generateID(): number {
   return Math.ceil(Math.random() * 65536) + 1;
+}
+
+function isUsingProxy(): boolean {
+  return import.meta.env.VITE_DAEMON_PROXY === "true";
 }
 
 async function rpcDirect(
@@ -65,5 +76,12 @@ async function rpc(
 }
 
 export default {
+  CLAIM_SEARCH,
+  GET,
+  RESOLVE,
+  SETTINGS_GET,
+  TXO_LIST,
+  WALLET_BALANCE,
+  isUsingProxy,
   rpc,
 };

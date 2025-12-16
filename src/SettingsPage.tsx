@@ -5,16 +5,15 @@ import LBRY from "~/LBRY";
 function SettingsPage() {
   const daemonRPC: string = useDaemonRPC();
 
-  const [settings, setSettings]: [object, (value: object) => object] =
-    useState();
+  const [settings, setSettings] = useState<object>();
 
   useEffect((): void => {
     LBRY.rpc(
       daemonRPC,
-      "settings_get",
+      LBRY.SETTINGS_GET,
       null,
       null,
-      import.meta.env.VITE_DAEMON_PROXY === "true",
+      LBRY.isUsingProxy(),
     ).then((json: object): void => {
       setSettings(json.result || json.error?.message || "Unknown error");
     });

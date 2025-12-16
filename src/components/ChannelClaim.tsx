@@ -17,7 +17,7 @@ function ChannelClaim({ data }: Props & { data: Channel }): JSX.Element {
   useEffect((): void => {
     LBRY.rpc(
       daemonRPC,
-      "claim_search",
+      LBRY.CLAIM_SEARCH,
       {
         page_size: 20,
         page: 1,
@@ -32,7 +32,7 @@ function ChannelClaim({ data }: Props & { data: Channel }): JSX.Element {
         include_purchase_receipt: true,
       },
       null,
-      import.meta.env.VITE_DAEMON_PROXY === "true",
+      LBRY.isUsingProxy(),
     ).then((json: object): void => {
       setContent(json.result.items);
     });
@@ -41,7 +41,7 @@ function ChannelClaim({ data }: Props & { data: Channel }): JSX.Element {
   useEffect((): void => {
     LBRY.rpc(
       daemonRPC,
-      "claim_search",
+      LBRY.CLAIM_SEARCH,
       {
         page_size: 20,
         page: 1,
@@ -56,7 +56,7 @@ function ChannelClaim({ data }: Props & { data: Channel }): JSX.Element {
         include_purchase_receipt: true,
       },
       null,
-      import.meta.env.VITE_DAEMON_PROXY === "true",
+      LBRY.isUsingProxy(),
     ).then((json: object): void => {
       setPlaylists(json.result.items);
     });

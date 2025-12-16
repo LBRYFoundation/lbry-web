@@ -12,18 +12,16 @@ function ClaimPage(): JSX.Element {
   const params: Params<string> = useParams();
   const claim: string = params["*"];
 
-  const [claimResolveData, setClaimResolveData] = useState(null);
+  const [claimResolveData, setClaimResolveData] = useState<object>(null);
 
   useEffect((): void => {
     LBRY.rpc(
       daemonRPC,
-      "resolve",
+      LBRY.RESOLVE,
       { urls: [claim] },
       null,
-      import.meta.env.VITE_DAEMON_PROXY === "true",
-    ).then(async (json: object) => {
-      //await new Promise(r => setTimeout(r, 10000));
-
+      LBRY.isUsingProxy(),
+    ).then((json: object): void => {
       setClaimResolveData(json.result[claim] ?? null);
     });
   }, [claim, daemonRPC]);

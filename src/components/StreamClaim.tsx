@@ -18,16 +18,16 @@ function downloadMarkdownFile(claimGetData, setMarkdown): void {
 function StreamClaim({ data }: Props & { data: Stream }): JSX.Element {
   const daemonRPC: string = useDaemonRPC();
 
-  const [claimGetData, setClaimGetData] = useState(null);
+  const [claimGetData, setClaimGetData] = useState<object[unknown]>(null);
   const [markdown, setMarkdown] = useState<string>("");
 
   useEffect((): void => {
     LBRY.rpc(
       daemonRPC,
-      "get",
+      LBRY.GET,
       { uri: data.canonical_url },
       null,
-      import.meta.env.VITE_DAEMON_PROXY === "true",
+      LBRY.isUsingProxy(),
     ).then((json: object): void => {
       setClaimGetData(json.result);
     });
@@ -35,7 +35,7 @@ function StreamClaim({ data }: Props & { data: Stream }): JSX.Element {
 
   //
   const [recommendedIsChannelItems, setRecommendedIsChannelItems] =
-    useState(false);
+    useState<boolean>(false);
 
   // return (
   //   <div style={{ display: "flex" }}>

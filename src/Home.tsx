@@ -13,27 +13,29 @@ function Home(): JSX.Element {
   const [row3, setRow3] = useState<object[]>([]);
 
   useEffect((): void => {
+    const searchOptions: object = {
+      page_size: 4,
+      claim_type: ["stream", "repost", "channel"],
+      no_totals: true,
+      any_tags: [],
+      not_tags: NOT_TAGS,
+      channel_ids: [
+        "80d2590ad04e36fb1d077a9b9e3a8bba76defdf8",
+        "b58dfaeab6c70754d792cdd9b56ff59b90aea334",
+      ],
+      not_channel_ids: [],
+      order_by: ["release_time"],
+      has_source: true,
+      release_time: ">1731193200",
+      include_purchase_receipt: true,
+    };
+
     LBRY.rpc(
       daemonRPC,
-      "claim_search",
-      {
-        page_size: 4,
-        claim_type: ["stream", "repost", "channel"],
-        no_totals: true,
-        any_tags: [],
-        not_tags: NOT_TAGS,
-        channel_ids: [
-          "80d2590ad04e36fb1d077a9b9e3a8bba76defdf8",
-          "b58dfaeab6c70754d792cdd9b56ff59b90aea334",
-        ],
-        not_channel_ids: [],
-        order_by: ["release_time"],
-        has_source: true,
-        release_time: ">1731193200",
-        include_purchase_receipt: true,
-      },
+      LBRY.CLAIM_SEARCH,
+      searchOptions,
       null,
-      import.meta.env.VITE_DAEMON_PROXY === "true",
+      LBRY.isUsingProxy(),
     ).then((json: object): void => {
       setRow1(json.result.items);
     });
@@ -42,7 +44,7 @@ function Home(): JSX.Element {
   useEffect((): void => {
     LBRY.rpc(
       daemonRPC,
-      "claim_search",
+      LBRY.CLAIM_SEARCH,
       {
         page_size: 4,
         claim_type: ["stream"],
@@ -58,7 +60,7 @@ function Home(): JSX.Element {
         include_purchase_receipt: true,
       },
       null,
-      import.meta.env.VITE_DAEMON_PROXY === "true",
+      LBRY.isUsingProxy(),
     ).then((json: object): void => {
       setRow2(json.result.items);
     });
@@ -67,7 +69,7 @@ function Home(): JSX.Element {
   useEffect((): void => {
     LBRY.rpc(
       daemonRPC,
-      "claim_search",
+      LBRY.CLAIM_SEARCH,
       {
         page_size: 4,
         claim_type: ["stream", "repost", "channel"],
@@ -81,7 +83,7 @@ function Home(): JSX.Element {
         include_purchase_receipt: true,
       },
       null,
-      import.meta.env.VITE_DAEMON_PROXY === "true",
+      LBRY.isUsingProxy(),
     ).then((json: object): void => {
       setRow3(json.result.items);
     });

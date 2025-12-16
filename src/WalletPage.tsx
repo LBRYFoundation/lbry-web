@@ -6,16 +6,16 @@ import LBRY from "~/LBRY";
 function WalletPage() {
   const daemonRPC: string = useDaemonRPC();
 
-  const [wallet, setWallet] = useState(null);
+  const [wallet, setWallet] = useState<object[unknown]>(null);
   const [transactions, setTransactions] = useState<object[]>([]);
 
   useEffect((): void => {
     LBRY.rpc(
       daemonRPC,
-      "wallet_balance",
+      LBRY.WALLET_BALANCE,
       null,
       null,
-      import.meta.env.VITE_DAEMON_PROXY === "true",
+      LBRY.isUsingProxy(),
     ).then((json: object): void => {
       if (json.error) {
         return;
@@ -25,18 +25,14 @@ function WalletPage() {
   }, [daemonRPC]);
 
   useEffect((): void => {
-    LBRY.rpc(
-      daemonRPC,
-      "txo_list",
-      null,
-      null,
-      import.meta.env.VITE_DAEMON_PROXY === "true",
-    ).then((json: object): void => {
-      if (json.error) {
-        return;
-      }
-      setTransactions(json.result?.items || []);
-    });
+    LBRY.rpc(daemonRPC, LBRY.TXO_LIST, null, null, LBRY.isUsingProxy()).then(
+      (json: object): void => {
+        if (json.error) {
+          return;
+        }
+        setTransactions(json.result?.items || []);
+      },
+    );
   }, [daemonRPC]);
 
   return (
