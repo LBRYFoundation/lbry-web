@@ -2,6 +2,7 @@ const VERSION_2_0: string = "2.0";
 
 const CLAIM_SEARCH: string = "claim_search";
 const GET: string = "get";
+const PREFERENCE_GET: string = "preference_get";
 const RESOLVE: string = "resolve";
 const SETTINGS_GET: string = "settings_get";
 const TXO_LIST: string = "txo_list";
@@ -78,6 +79,7 @@ async function rpc(
 export default {
   CLAIM_SEARCH,
   GET,
+  PREFERENCE_GET,
   RESOLVE,
   SETTINGS_GET,
   TXO_LIST,
