@@ -1,4 +1,11 @@
-import { ChangeEvent, JSX, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  JSX,
+  RefObject,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   Link,
   Location,
@@ -19,6 +26,36 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
 
   const urlQuery: string = new URLSearchParams(location.search).get("q") || "";
   const [query, setQuery] = useState<string>("");
+
+  const [historyMenu, setHistoryMenu] = useState<"back" | "next" | null>(null);
+  const backMenu: RefObject<HTMLUListElement> = useRef<HTMLUListElement>(null);
+  const nextMenu: RefObject<HTMLUListElement> = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    if (!historyMenu) {
+      return;
+    }
+
+    function handleClick(ev: MouseEvent): void {
+      if (
+        historyMenu === "back" &&
+        backMenu.current &&
+        !backMenu.current.contains(ev.target as Node)
+      ) {
+        setHistoryMenu(null);
+      }
+      if (
+        historyMenu === "next" &&
+        nextMenu.current &&
+        !nextMenu.current.contains(ev.target as Node)
+      ) {
+        setHistoryMenu(null);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [historyMenu]);
 
   useEffect((): void => {
     setQuery(urlQuery);
@@ -101,62 +138,138 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
           </Link>
         </div>
         <div style={{ justifyContent: "center" }}>
-          <NavLink
-            className="hoverHeaderButtonFill"
-            disabled={appHistory.getPrevious().length === 0}
-            onClick={
-              appHistory.getPrevious().length > 0
-                ? (): void => {
-                    navigate(-1);
-                  }
-                : null
-            }
-            to={null}
-            style={{
-              backgroundColor: "rgba(45, 45, 45, 0.7)",
-              borderRadius: "1.5rem",
-              display: "inline-block",
-              height: "40px",
-              marginRight: "10px",
-              textAlign: "center",
-              verticalAlign: "middle",
-              width: "40px",
-            }}
-          >
-            <CustomSVG
-              icon="arrow-left"
-              viewBox="0 0 24 24"
-              style={{ height: "18px", padding: "11px 0" }}
-            />
-          </NavLink>
-          <NavLink
-            className="hoverHeaderButtonFill"
-            disabled={appHistory.getNext().length === 0}
-            onClick={
-              appHistory.getNext().length > 0
-                ? (): void => {
-                    navigate(1);
-                  }
-                : null
-            }
-            to={null}
-            style={{
-              backgroundColor: "rgba(45, 45, 45, 0.7)",
-              borderRadius: "1.5rem",
-              display: "inline-block",
-              height: "40px",
-              marginRight: "10px",
-              textAlign: "center",
-              verticalAlign: "middle",
-              width: "40px",
-            }}
-          >
-            <CustomSVG
-              icon="arrow-right"
-              viewBox="0 0 24 24"
-              style={{ height: "18px", padding: "11px 0" }}
-            />
-          </NavLink>
+          <div style={{ display: "inline-block" }}>
+            <div style={{ display: "inline-block" }}>
+              <NavLink
+                className="hoverHeaderButtonFill"
+                disabled={appHistory.getPrevious().length === 0}
+                onClick={
+                  appHistory.getPrevious().length > 0
+                    ? (): void => {
+                        navigate(-1);
+                      }
+                    : null
+                }
+                onContextMenu={(ev: unknown): void => {
+                  ev.preventDefault();
+                  setHistoryMenu("back");
+                }}
+                to={null}
+                style={{
+                  backgroundColor: "rgba(45, 45, 45, 0.7)",
+                  borderRadius: "1.5rem",
+                  display: "inline-block",
+                  height: "40px",
+                  marginRight: "10px",
+                  textAlign: "center",
+                  verticalAlign: "middle",
+                  width: "40px",
+                }}
+              >
+                <CustomSVG
+                  icon="arrow-left"
+                  viewBox="0 0 24 24"
+                  style={{ height: "18px", padding: "11px 0" }}
+                />
+              </NavLink>
+              {historyMenu === "back" && appHistory.getPrevious().length ? (
+                <ul
+                  ref={backMenu}
+                  style={{
+                    backgroundColor: "rgba(45, 45, 45, 0.9)",
+                    borderRadius: 6,
+                    listStyle: "none",
+                    margin: "0",
+                    maxHeight: "200px",
+                    overflowY: "auto",
+                    padding: 8,
+                    position: "absolute",
+                    top: "60px",
+                  }}
+                >
+                  {appHistory.getPrevious().map((item: object, i: number) => (
+                    <li
+                      key={i}
+                      onClick={() => navigate(-(i + 1))}
+                      style={{
+                        backgroundColor: "rgb(63,63,70)",
+                        borderRadius: "6px",
+                        cursor: "pointer",
+                        padding: "6px",
+                      }}
+                    >
+                      {item["title"]}
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </div>
+            <div style={{ display: "inline-block" }}>
+              <NavLink
+                className="hoverHeaderButtonFill"
+                disabled={appHistory.getNext().length === 0}
+                onClick={
+                  appHistory.getNext().length > 0
+                    ? (): void => {
+                        navigate(1);
+                      }
+                    : null
+                }
+                onContextMenu={(ev: unknown): void => {
+                  ev.preventDefault();
+                  setHistoryMenu("next");
+                }}
+                to={null}
+                style={{
+                  backgroundColor: "rgba(45, 45, 45, 0.7)",
+                  borderRadius: "1.5rem",
+                  display: "inline-block",
+                  height: "40px",
+                  marginRight: "10px",
+                  textAlign: "center",
+                  verticalAlign: "middle",
+                  width: "40px",
+                }}
+              >
+                <CustomSVG
+                  icon="arrow-right"
+                  viewBox="0 0 24 24"
+                  style={{ height: "18px", padding: "11px 0" }}
+                />
+              </NavLink>
+              {historyMenu === "next" && appHistory.getNext().length > 0 ? (
+                <ul
+                  ref={nextMenu}
+                  style={{
+                    backgroundColor: "rgba(45, 45, 45, 0.9)",
+                    borderRadius: 6,
+                    listStyle: "none",
+                    margin: "0",
+                    maxHeight: "200px",
+                    overflowY: "auto",
+                    padding: 8,
+                    position: "absolute",
+                    top: "60px",
+                  }}
+                >
+                  {appHistory.getNext().map((item: object, i: number) => (
+                    <li
+                      key={i}
+                      onClick={() => navigate(i + 1)}
+                      style={{
+                        backgroundColor: "rgb(63,63,70)",
+                        borderRadius: "6px",
+                        cursor: "pointer",
+                        padding: "6px",
+                      }}
+                    >
+                      {item["title"]}
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </div>
+          </div>
           <div style={{ display: "inline-block", height: "40px" }}>
             <form
               action="/search"
