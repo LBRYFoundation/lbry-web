@@ -4,11 +4,11 @@ import Error from "~/components/Error";
 import Loader from "~/components/Loader";
 
 function LibraryPage(): JSX.Element {
-    const localPreferenceResponse: object = {
-        error:{
-            message:"Not yet implemented.",
-        },
-    };
+  const localPreferenceResponse: object = {
+    error: {
+      message: "Not yet implemented.",
+    },
+  };
 
   return (
     <>

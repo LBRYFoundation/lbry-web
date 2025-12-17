@@ -44,8 +44,6 @@ function TagsPage(): JSX.Element {
       (toggle === "trending" ? "<" + hourAgo : "") +
       (toggle === "top" ? ">" + hourAgo : "");
 
-    // "<1765920600"
-
     const searchOptions: object = {
       page_size: 20,
       page: 1,
@@ -95,36 +93,79 @@ function TagsPage(): JSX.Element {
         ) : (
           <>
             <div style={{ padding: "16px 0" }}>
-              <button
-                onClick={(): void => {
-                  if (toggle !== "new") {
-                    setItems(null);
-                  }
-                  setToggle("new");
-                }}
-              >
-                New
-              </button>
-              <button
-                onClick={(): void => {
-                  if (toggle !== "trending") {
-                    setItems(null);
-                  }
-                  setToggle("trending");
-                }}
-              >
-                Trending
-              </button>
-              <button
-                onClick={(): void => {
-                  if (toggle !== "top") {
-                    setItems(null);
-                  }
-                  setToggle("top");
-                }}
-              >
-                Top
-              </button>
+              <div>
+                <button
+                  onClick={(): void => {
+                    if (toggle !== "new") {
+                      setItems(null);
+                    }
+                    setToggle("new");
+                  }}
+                  style={{
+                    backgroundColor:
+                      toggle == "new"
+                        ? "rgb(17, 17, 17)"
+                        : "rgba(17, 17, 17, 0.4)",
+                    // backgroundColorHover: 'rgba(17, 17, 17, 0.7)',
+                    border: "none",
+                    borderRadius: "6px 0 0 6px",
+                    color: "white",
+                    cursor: "pointer",
+                    fontWeight: "700",
+                    height: "40px",
+                    padding: "0 16px",
+                  }}
+                >
+                  <span>New</span>
+                </button>
+                <button
+                  onClick={(): void => {
+                    if (toggle !== "trending") {
+                      setItems(null);
+                    }
+                    setToggle("trending");
+                  }}
+                  style={{
+                    backgroundColor:
+                      toggle == "trending"
+                        ? "rgb(17, 17, 17)"
+                        : "rgba(17, 17, 17, 0.4)",
+                    // backgroundColorHover: 'rgba(17, 17, 17, 0.7)',
+                    border: "none",
+                    color: "white",
+                    cursor: "pointer",
+                    fontWeight: "700",
+                    height: "40px",
+                    padding: "0 16px",
+                  }}
+                >
+                  Trending
+                </button>
+                <button
+                  onClick={(): void => {
+                    if (toggle !== "top") {
+                      setItems(null);
+                    }
+                    setToggle("top");
+                  }}
+                  style={{
+                    backgroundColor:
+                      toggle == "top"
+                        ? "rgb(17, 17, 17)"
+                        : "rgba(17, 17, 17, 0.4)",
+                    // backgroundColorHover: 'rgba(17, 17, 17, 0.7)',
+                    border: "none",
+                    borderRadius: "0 6px 6px 0",
+                    color: "white",
+                    cursor: "pointer",
+                    fontWeight: "700",
+                    height: "40px",
+                    padding: "0 16px",
+                  }}
+                >
+                  Top
+                </button>
+              </div>
             </div>
             <div style={{ padding: "16px 0", textAlign: "center" }}>
               {items === null ? (
@@ -132,9 +173,11 @@ function TagsPage(): JSX.Element {
               ) : "string" === typeof items ? (
                 <span style={{ color: "red" }}>{items}</span>
               ) : items.length > 0 ? (
-                items.map((cell: unknown, i: number) => (
-                  <ClaimPreviewTile claim={cell} key={i} />
-                ))
+                items.map(
+                  (cell: unknown, i: number): JSX.Element => (
+                    <ClaimPreviewTile claim={cell} key={i} />
+                  ),
+                )
               ) : (
                 "No items"
               )}

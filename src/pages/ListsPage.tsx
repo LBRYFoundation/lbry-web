@@ -5,9 +5,9 @@ import Loader from "~/components/Loader";
 
 function ListsPage(): JSX.Element {
   const localPreferenceResponse: object = {
-      error:{
-          message:"Not yet implemented.",
-      },
+    error: {
+      message: "Not yet implemented.",
+    },
   };
 
   return (
