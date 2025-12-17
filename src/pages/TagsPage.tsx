@@ -71,79 +71,81 @@ function TagsPage(): JSX.Element {
     });
   }, [daemonRPC, tags, toggle]);
 
-  if (localPreferenceResponse) {
-    if (localPreferenceResponse.error) {
-      return <Error message={localPreferenceResponse.error.message} />;
-    }
-    return (
-      <>
-        <div>
-          <CustomSVG
-            style={{
-              fill: "transparent",
-              height: "24",
-              width: "24",
-              verticalAlign: "middle",
-              stroke: "white",
-              strokeWidth: "2px",
-              padding: open ? "0px 8px 0px 12px" : null,
-            }}
-            icon="tag"
-            viewBox="0 0 24 24"
-          />
-          <h1 style={{ display: "inline-block", verticalAlign: "middle" }}>
-            Your Tags
-          </h1>
-          <div style={{ padding: "16px 0" }}>
-            <button
-              onClick={(): void => {
-                if (toggle !== "new") {
-                  setItems(null);
-                }
-                setToggle("new");
-              }}
-            >
-              New
-            </button>
-            <button
-              onClick={(): void => {
-                if (toggle !== "trending") {
-                  setItems(null);
-                }
-                setToggle("trending");
-              }}
-            >
-              Trending
-            </button>
-            <button
-              onClick={(): void => {
-                if (toggle !== "top") {
-                  setItems(null);
-                }
-                setToggle("top");
-              }}
-            >
-              Top
-            </button>
-          </div>
-          <div style={{ padding: "16px 0", textAlign: "center" }}>
-            {items === null ? (
-              <Loader />
-            ) : "string" === typeof items ? (
-              <span style={{ color: "red" }}>{items}</span>
-            ) : items.length > 0 ? (
-              items.map((cell: unknown, i: number) => (
-                <ClaimPreviewTile claim={cell} key={i} />
-              ))
-            ) : (
-              "No items"
-            )}
-          </div>
-        </div>
-      </>
-    );
-  }
-  return <Loader />;
+  return (
+    <>
+      <h1>
+        <CustomSVG
+          style={{
+            fill: "transparent",
+            height: "24",
+            width: "24",
+            verticalAlign: "middle",
+            stroke: "white",
+            strokeWidth: "2px",
+            padding: open ? "0px 8px 0px 12px" : null,
+          }}
+          icon="tag"
+          viewBox="0 0 24 24"
+        />{" "}
+        <span style={{ verticalAlign: "middle" }}>Your Tags</span>
+      </h1>
+      {localPreferenceResponse ? (
+        localPreferenceResponse.error ? (
+          <Error message={localPreferenceResponse.error.message} />
+        ) : (
+          <>
+            <div style={{ padding: "16px 0" }}>
+              <button
+                onClick={(): void => {
+                  if (toggle !== "new") {
+                    setItems(null);
+                  }
+                  setToggle("new");
+                }}
+              >
+                New
+              </button>
+              <button
+                onClick={(): void => {
+                  if (toggle !== "trending") {
+                    setItems(null);
+                  }
+                  setToggle("trending");
+                }}
+              >
+                Trending
+              </button>
+              <button
+                onClick={(): void => {
+                  if (toggle !== "top") {
+                    setItems(null);
+                  }
+                  setToggle("top");
+                }}
+              >
+                Top
+              </button>
+            </div>
+            <div style={{ padding: "16px 0", textAlign: "center" }}>
+              {items === null ? (
+                <Loader />
+              ) : "string" === typeof items ? (
+                <span style={{ color: "red" }}>{items}</span>
+              ) : items.length > 0 ? (
+                items.map((cell: unknown, i: number) => (
+                  <ClaimPreviewTile claim={cell} key={i} />
+                ))
+              ) : (
+                "No items"
+              )}
+            </div>
+          </>
+        )
+      ) : (
+        <Loader />
+      )}
+    </>
+  );
 }
 
 export default TagsPage;

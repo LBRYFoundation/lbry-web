@@ -1,13 +1,16 @@
-import { JSX, useEffect, useState } from "react";
+import React, { JSX, useEffect, useState } from "react";
 import { Link } from "react-router";
 import useDaemonRPC from "~/DaemonRPC";
 import LBRY from "~/LBRY";
+import Error from "~/components/Error";
+import Loader from "~/components/Loader";
 
 function WalletPage() {
   const daemonRPC: string = useDaemonRPC();
 
-  const [wallet, setWallet] = useState<object[unknown]>(null);
-  const [transactions, setTransactions] = useState<object[]>([]);
+  const [walletResponse, setWalletResponse] = useState<object>(undefined);
+  const [transactionsResponse, setTransactionsResponse] =
+    useState<object>(undefined);
 
   useEffect((): void => {
     LBRY.rpc(
@@ -17,20 +20,14 @@ function WalletPage() {
       null,
       LBRY.isUsingProxy(),
     ).then((json: object): void => {
-      if (json.error) {
-        return;
-      }
-      setWallet(json.result);
+      setWalletResponse(json);
     });
   }, [daemonRPC]);
 
   useEffect((): void => {
     LBRY.rpc(daemonRPC, LBRY.TXO_LIST, null, null, LBRY.isUsingProxy()).then(
       (json: object): void => {
-        if (json.error) {
-          return;
-        }
-        setTransactions(json.result?.items || []);
+        setTransactionsResponse(json);
       },
     );
   }, [daemonRPC]);
@@ -38,51 +35,65 @@ function WalletPage() {
   return (
     <>
       <h1>Wallet</h1>
-      <div id="wallet">
-        {wallet ? (
-          <span>
-            <b>Available:</b> {wallet.available}
-          </span>
-        ) : null}
-      </div>
+      {walletResponse ? (
+        walletResponse.error ? (
+          <Error message={walletResponse.error.message} />
+        ) : (
+          <div id="wallet">
+            <span>
+              <b>Available:</b> {walletResponse?.result?.available}
+            </span>
+          </div>
+        )
+      ) : (
+        <Loader />
+      )}
       <h2>Transactions</h2>
-      <div id="transactions">
-        <table style={{ width: "100%" }}>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Type</th>
-              <th>Details</th>
-              <th>Transaction</th>
-              <th>LBC</th>
-            </tr>
-          </thead>
-          <tbody>
-            {transactions.map(
-              (transaction: unknown, i: number): JSX.Element => (
-                <tr key={i}>
-                  <td>
-                    <span>{transaction.timestamp}</span>
-                    <br />
-                    <span>{transaction.timestamp}</span>
-                  </td>
-                  <td>{transaction.type}</td>
-                  <td></td>
-                  <td>
-                    <Link
-                      to={`https://explorer.lbry.org/tx/${transaction.txid}`}
-                      target="_blank"
-                    >
-                      {transaction.txid}
-                    </Link>
-                  </td>
-                  <td>{transaction.amount}</td>
+      {transactionsResponse ? (
+        transactionsResponse.error ? (
+          <Error message={transactionsResponse.error.message} />
+        ) : (
+          <div id="transactions">
+            <table style={{ width: "100%" }}>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Type</th>
+                  <th>Details</th>
+                  <th>Transaction</th>
+                  <th>LBC</th>
                 </tr>
-              ),
-            )}
-          </tbody>
-        </table>
-      </div>
+              </thead>
+              <tbody>
+                {transactionsResponse?.result?.map(
+                  (transaction: unknown, i: number): JSX.Element => (
+                    <tr key={i}>
+                      <td>
+                        <span>{transaction.timestamp}</span>
+                        <br />
+                        <span>{transaction.timestamp}</span>
+                      </td>
+                      <td>{transaction.type}</td>
+                      <td></td>
+                      <td>
+                        <Link
+                          to={`https://explorer.lbry.org/tx/${transaction.txid}`}
+                          target="_blank"
+                        >
+                          {transaction.txid}
+                        </Link>
+                      </td>
+                      <td>{transaction.amount}</td>
+                    </tr>
+                  ),
+                )}
+              </tbody>
+            </table>
+          </div>
+        )
+      ) : (
+        <Loader />
+      )}
     </>
   );
 }
