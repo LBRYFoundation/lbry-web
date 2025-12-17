@@ -1,7 +1,7 @@
 import { JSX } from "react";
 
-function Library(): JSX.Element {
+function LibraryPage(): JSX.Element {
   return <>TODO Library page</>;
 }
 
-export default Library;
+export default LibraryPage;

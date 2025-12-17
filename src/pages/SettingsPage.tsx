@@ -1,11 +1,13 @@
-import { JSX, useEffect, useState } from "react";
+import React, { JSX, useEffect, useState } from "react";
 import useDaemonRPC from "~/DaemonRPC";
 import LBRY from "~/LBRY";
+import Error from "~/components/Error";
+import Loader from "~/components/Loader";
 
 function SettingsPage() {
   const daemonRPC: string = useDaemonRPC();
 
-  const [settings, setSettings] = useState<object>();
+  const [settingsResponse, setSettingsResponse] = useState<object>(undefined);
 
   useEffect((): void => {
     LBRY.rpc(
@@ -15,48 +17,41 @@ function SettingsPage() {
       null,
       LBRY.isUsingProxy(),
     ).then((json: object): void => {
-      setSettings(json.result || json.error?.message || "Unknown error");
+      setSettingsResponse(json);
     });
   }, [daemonRPC]);
 
   return (
     <>
       <h1>Settings</h1>
-      <div id="settings">
-        {typeof settings === "string" ? (
-          <>
-            <b>Error:</b>
-            <br />
-            <span>{settings}</span>
-          </>
-        ) : null}
-        {typeof settings === "object" ? (
-          <>
-            {settings == null ? (
-              <span>Loading...</span>
-            ) : (
-              <>
-                {Object.keys(settings).map(
-                  (setting: string, i: number): JSX.Element => (
-                    <div
-                      key={i}
-                      style={{
-                        border: "1px solid red",
-                        margin: "8px 0",
-                        padding: "16px",
-                      }}
-                    >
-                      <b>{setting}</b>
-                      <br />
-                      <span>{JSON.stringify(settings[setting])}</span>
-                    </div>
-                  ),
-                )}
-              </>
+      {settingsResponse ? (
+        settingsResponse.error ? (
+          <Error message={settingsResponse.error.message} />
+        ) : (
+          <div id="settings">
+            {Object.keys(settingsResponse.result).map(
+              (setting: string, i: number): JSX.Element => (
+                <div
+                  key={i}
+                  style={{
+                    border: "1px solid red",
+                    margin: "8px 0",
+                    padding: "16px",
+                  }}
+                >
+                  <b>{setting}</b>
+                  <br />
+                  <span>
+                    {JSON.stringify(settingsResponse.result[setting])}
+                  </span>
+                </div>
+              ),
             )}
-          </>
-        ) : null}
-      </div>
+          </div>
+        )
+      ) : (
+        <Loader />
+      )}
     </>
   );
 }

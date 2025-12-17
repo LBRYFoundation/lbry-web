@@ -2,25 +2,25 @@ import React, { JSX } from "react";
 import { Route, Routes } from "react-router";
 import NotFound from "~/NotFound";
 import ClaimPage from "~/pages/ClaimPage";
-import Discover from "~/pages/Discover";
+import DiscoverPage from "~/pages/DiscoverPage";
 import Following from "~/pages/Following";
-import Home from "~/pages/Home";
-import Library from "~/pages/Library";
-import Lists from "~/pages/Lists";
+import HomePage from "~/pages/HomePage";
+import LibraryPage from "~/pages/LibraryPage";
+import ListsPage from "~/pages/ListsPage";
 import SearchPage from "~/pages/SearchPage";
 import SettingsPage from "~/pages/SettingsPage";
-import Tags from "~/pages/Tags";
+import TagsPage from "~/pages/TagsPage";
 import WalletPage from "~/pages/WalletPage";
 
 function AppRoutes(): JSX.Element {
   return (
     <Routes>
-      <Route index path="/" element={<Home />} />
+      <Route index path="/" element={<HomePage />} />
       <Route index path="/following" element={<Following />} />
-      <Route index path="/tags" element={<Tags />} />
-      <Route index path="/discover" element={<Discover />} />
-      <Route index path="/library" element={<Library />} />
-      <Route index path="/lists" element={<Lists />} />
+      <Route index path="/tags" element={<TagsPage />} />
+      <Route index path="/discover" element={<DiscoverPage />} />
+      <Route index path="/library" element={<LibraryPage />} />
+      <Route index path="/lists" element={<ListsPage />} />
 
       <Route path="/claim/*" element={<ClaimPage />} />
       <Route path="/wallet" element={<WalletPage />} />

@@ -7,7 +7,7 @@ import CustomSVG from "~/components/CustomSVG";
 import Error from "~/components/Error";
 import Loader from "~/components/Loader";
 
-function Tags(): JSX.Element {
+function TagsPage(): JSX.Element {
   const daemonRPC: string = useDaemonRPC();
 
   const [localPreferenceResponse, setLocalPreferenceResponse] =
@@ -146,4 +146,4 @@ function Tags(): JSX.Element {
   return <Loader />;
 }
 
-export default Tags;
+export default TagsPage;

@@ -5,7 +5,7 @@ import LBRY from "~/LBRY";
 import ClaimPreviewTile from "~/components/ClaimPreviewTile";
 import Loader from "~/components/Loader";
 
-function Home(): JSX.Element {
+function HomePage(): JSX.Element {
   const daemonRPC: string = useDaemonRPC();
 
   const [row1, setRow1] = useState<object[]>([]);
@@ -113,4 +113,4 @@ function Home(): JSX.Element {
   );
 }
 
-export default Home;
+export default HomePage;
