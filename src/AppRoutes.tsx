@@ -4,6 +4,7 @@ import NotFound from "~/NotFound";
 import ClaimPage from "~/pages/ClaimPage";
 import DiscoverPage from "~/pages/DiscoverPage";
 import FollowingPage from "~/pages/FollowingPage";
+import HelpPage from "~/pages/HelpPage";
 import HomePage from "~/pages/HomePage";
 import LibraryPage from "~/pages/LibraryPage";
 import ListsPage from "~/pages/ListsPage";
@@ -26,6 +27,7 @@ function AppRoutes(): JSX.Element {
       <Route path="/wallet" element={<WalletPage />} />
       <Route path="/search" element={<SearchPage />} />
       <Route path="/settings" element={<SettingsPage />} />
+      <Route path="/help" element={<HelpPage />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>

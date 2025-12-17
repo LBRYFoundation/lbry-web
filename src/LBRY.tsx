@@ -5,7 +5,9 @@ const GET: string = "get";
 const PREFERENCE_GET: string = "preference_get";
 const RESOLVE: string = "resolve";
 const SETTINGS_GET: string = "settings_get";
+const STATUS: string = "status";
 const TXO_LIST: string = "txo_list";
+const VERSION: string = "version";
 const WALLET_BALANCE: string = "wallet_balance";
 
 function generateID(): number {
@@ -82,7 +84,9 @@ export default {
   PREFERENCE_GET,
   RESOLVE,
   SETTINGS_GET,
+  STATUS,
   TXO_LIST,
+  VERSION,
   WALLET_BALANCE,
   isUsingProxy,
   rpc,

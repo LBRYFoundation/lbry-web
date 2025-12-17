@@ -27,7 +27,7 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
   const urlQuery: string = new URLSearchParams(location.search).get("q") || "";
   const [query, setQuery] = useState<string>("");
 
-  const [historyMenu, setHistoryMenu] = useState<
+  const [headerMenu, setHeaderMenu] = useState<
     "back" | "next" | "upload" | "settings" | "account" | null
   >(null);
   const backMenu: RefObject<HTMLUListElement> = useRef<HTMLUListElement>(null);
@@ -40,35 +40,35 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
     useRef<HTMLUListElement>(null);
 
   useEffect(() => {
-    if (!historyMenu) {
+    if (!headerMenu) {
       return;
     }
 
     function handleClick(ev: MouseEvent): void {
       if (
-        (historyMenu === "back" &&
+        (headerMenu === "back" &&
           backMenu.current &&
-          !backMenu.current.contains(ev.target as Node)) ||
-        (historyMenu === "next" &&
+          !backMenu.current.parentNode.contains(ev.target as Node)) ||
+        (headerMenu === "next" &&
           nextMenu.current &&
-          !nextMenu.current.contains(ev.target as Node)) ||
-        (historyMenu === "upload" &&
+          !nextMenu.current.parentNode.contains(ev.target as Node)) ||
+        (headerMenu === "upload" &&
           uploadMenu.current &&
-          !uploadMenu.current.contains(ev.target as Node)) ||
-        (historyMenu === "settings" &&
+          !uploadMenu.current.parentNode.contains(ev.target as Node)) ||
+        (headerMenu === "settings" &&
           settingsMenu.current &&
-          !settingsMenu.current.contains(ev.target as Node)) ||
-        (historyMenu === "account" &&
+          !settingsMenu.current.parentNode.contains(ev.target as Node)) ||
+        (headerMenu === "account" &&
           accountMenu.current &&
-          !accountMenu.current.contains(ev.target as Node))
+          !accountMenu.current.parentNode.contains(ev.target as Node))
       ) {
-        setHistoryMenu(null);
+        setHeaderMenu(null);
       }
     }
 
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, [historyMenu]);
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, [headerMenu]);
 
   useEffect((): void => {
     setQuery(urlQuery);
@@ -165,7 +165,7 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
                 }
                 onContextMenu={(ev: unknown): void => {
                   ev.preventDefault();
-                  setHistoryMenu("back");
+                  setHeaderMenu("back");
                 }}
                 to={null}
                 style={{
@@ -185,33 +185,13 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
                   style={{ height: "18px", padding: "11px 0" }}
                 />
               </NavLink>
-              {historyMenu === "back" && appHistory.getPrevious().length ? (
-                <ul
-                  ref={backMenu}
-                  style={{
-                    backgroundColor: "rgba(45, 45, 45, 0.9)",
-                    borderRadius: 6,
-                    listStyle: "none",
-                    margin: "0",
-                    maxHeight: "200px",
-                    overflowY: "auto",
-                    padding: 8,
-                    position: "absolute",
-                    top: "60px",
-                  }}
-                >
+              {headerMenu === "back" && appHistory.getPrevious().length ? (
+                <ul ref={backMenu}>
                   {appHistory.getPrevious().map((item: object, i: number) => (
-                    <li
-                      key={i}
-                      onClick={() => navigate(-(i + 1))}
-                      style={{
-                        backgroundColor: "rgb(63,63,70)",
-                        borderRadius: "6px",
-                        cursor: "pointer",
-                        padding: "6px",
-                      }}
-                    >
-                      {item["title"]}
+                    <li key={i}>
+                      <NavLink onClick={() => navigate(-(i + 1))} to={null}>
+                        {item["title"]}
+                      </NavLink>
                     </li>
                   ))}
                 </ul>
@@ -230,7 +210,7 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
                 }
                 onContextMenu={(ev: unknown): void => {
                   ev.preventDefault();
-                  setHistoryMenu("next");
+                  setHeaderMenu("next");
                 }}
                 to={null}
                 style={{
@@ -250,33 +230,13 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
                   style={{ height: "18px", padding: "11px 0" }}
                 />
               </NavLink>
-              {historyMenu === "next" && appHistory.getNext().length > 0 ? (
-                <ul
-                  ref={nextMenu}
-                  style={{
-                    backgroundColor: "rgba(45, 45, 45, 0.9)",
-                    borderRadius: 6,
-                    listStyle: "none",
-                    margin: "0",
-                    maxHeight: "200px",
-                    overflowY: "auto",
-                    padding: 8,
-                    position: "absolute",
-                    top: "60px",
-                  }}
-                >
+              {headerMenu === "next" && appHistory.getNext().length > 0 ? (
+                <ul ref={nextMenu}>
                   {appHistory.getNext().map((item: object, i: number) => (
-                    <li
-                      key={i}
-                      onClick={() => navigate(i + 1)}
-                      style={{
-                        backgroundColor: "rgb(63,63,70)",
-                        borderRadius: "6px",
-                        cursor: "pointer",
-                        padding: "6px",
-                      }}
-                    >
-                      {item["title"]}
+                    <li key={i}>
+                      <NavLink onClick={() => navigate(i + 1)} to={null}>
+                        {item["title"]}
+                      </NavLink>
                     </li>
                   ))}
                 </ul>
@@ -334,7 +294,7 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
               className="hoverHeaderButtonFill"
               onClick={(ev: unknown): void => {
                 ev.preventDefault();
-                setHistoryMenu(historyMenu === "upload" ? null : "upload");
+                setHeaderMenu(headerMenu === "upload" ? null : "upload");
               }}
               to={null}
               style={{
@@ -358,42 +318,10 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
                 }}
               />
             </NavLink>
-            {historyMenu === "upload" ? (
-              <ul
-                ref={accountMenu}
-                style={{
-                  backgroundColor: "rgba(45, 45, 45, 0.9)",
-                  borderRadius: 6,
-                  direction: "initial",
-                  listStyle: "none",
-                  margin: "0",
-                  maxHeight: "200px",
-                  overflowY: "auto",
-                  padding: 8,
-                  position: "absolute",
-                  top: "60px",
-                }}
-              >
-                <li
-                  style={{
-                    backgroundColor: "rgb(63,63,70)",
-                    borderRadius: "6px",
-                    cursor: "pointer",
-                    padding: "6px",
-                  }}
-                >
-                  Upload
-                </li>
-                <li
-                  style={{
-                    backgroundColor: "rgb(63,63,70)",
-                    borderRadius: "6px",
-                    cursor: "pointer",
-                    padding: "6px",
-                  }}
-                >
-                  New Channel
-                </li>
+            {headerMenu === "upload" ? (
+              <ul ref={uploadMenu}>
+                <li>Upload</li>
+                <li>New Channel</li>
               </ul>
             ) : null}
           </div>
@@ -402,7 +330,7 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
               className="hoverHeaderButtonFill"
               onClick={(ev: unknown): void => {
                 ev.preventDefault();
-                setHistoryMenu(historyMenu ? null : "settings");
+                setHeaderMenu(headerMenu === "settings" ? null : "settings");
               }}
               to={null}
               style={{
@@ -427,52 +355,15 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
                 }}
               />
             </NavLink>
-            {historyMenu === "settings" ? (
-              <ul
-                ref={accountMenu}
-                style={{
-                  backgroundColor: "rgba(45, 45, 45, 0.9)",
-                  borderRadius: 6,
-                  direction: "initial",
-                  listStyle: "none",
-                  margin: "0",
-                  maxHeight: "200px",
-                  overflowY: "auto",
-                  padding: 8,
-                  position: "absolute",
-                  top: "60px",
-                }}
-              >
-                <li
-                  style={{
-                    backgroundColor: "rgb(63,63,70)",
-                    borderRadius: "6px",
-                    cursor: "pointer",
-                    padding: "6px",
-                  }}
-                >
-                  Uploads
+            {headerMenu === "settings" ? (
+              <ul ref={settingsMenu}>
+                <li>
+                  <NavLink to="/settings">Settings</NavLink>
                 </li>
-                <li
-                  style={{
-                    backgroundColor: "rgb(63,63,70)",
-                    borderRadius: "6px",
-                    cursor: "pointer",
-                    padding: "6px",
-                  }}
-                >
-                  Settings
+                <li>
+                  <NavLink to="/help">Help</NavLink>
                 </li>
-                <li
-                  style={{
-                    backgroundColor: "rgb(63,63,70)",
-                    borderRadius: "6px",
-                    cursor: "pointer",
-                    padding: "6px",
-                  }}
-                >
-                  Light/Dark
-                </li>
+                <li>Light/Dark</li>
               </ul>
             ) : null}
           </div>
@@ -517,7 +408,7 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
               className="hoverHeaderButtonFill"
               onClick={(ev: unknown): void => {
                 ev.preventDefault();
-                setHistoryMenu(historyMenu ? null : "account");
+                setHeaderMenu(headerMenu === "account" ? null : "account");
               }}
               to={null}
               style={{
@@ -542,62 +433,12 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
                 }}
               />
             </Link>
-            {historyMenu === "account" ? (
-              <ul
-                ref={accountMenu}
-                style={{
-                  backgroundColor: "rgba(45, 45, 45, 0.9)",
-                  borderRadius: 6,
-                  direction: "initial",
-                  listStyle: "none",
-                  margin: "0",
-                  maxHeight: "200px",
-                  overflowY: "auto",
-                  padding: 8,
-                  position: "absolute",
-                  top: "60px",
-                }}
-              >
-                <li
-                  style={{
-                    backgroundColor: "rgb(63,63,70)",
-                    borderRadius: "6px",
-                    cursor: "pointer",
-                    padding: "6px",
-                  }}
-                >
-                  Uploads
-                </li>
-                <li
-                  style={{
-                    backgroundColor: "rgb(63,63,70)",
-                    borderRadius: "6px",
-                    cursor: "pointer",
-                    padding: "6px",
-                  }}
-                >
-                  Channels
-                </li>
-                <li
-                  style={{
-                    backgroundColor: "rgb(63,63,70)",
-                    borderRadius: "6px",
-                    cursor: "pointer",
-                    padding: "6px",
-                  }}
-                >
-                  Creator Analytics
-                </li>
-                <li
-                  style={{
-                    backgroundColor: "rgb(63,63,70)",
-                    borderRadius: "6px",
-                    cursor: "pointer",
-                    padding: "6px",
-                  }}
-                >
-                  Cloud Connect
-                </li>
+            {headerMenu === "account" ? (
+              <ul ref={accountMenu} style={{ direction: "initial" }}>
+                <li>Uploads</li>
+                <li>Channels</li>
+                <li>Creator Analytics</li>
+                <li>Cloud Connect</li>
               </ul>
             ) : null}
           </div>
