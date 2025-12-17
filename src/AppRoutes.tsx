@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router";
 import NotFound from "~/NotFound";
 import ClaimPage from "~/pages/ClaimPage";
 import DiscoverPage from "~/pages/DiscoverPage";
-import Following from "~/pages/Following";
+import FollowingPage from "~/pages/FollowingPage";
 import HomePage from "~/pages/HomePage";
 import LibraryPage from "~/pages/LibraryPage";
 import ListsPage from "~/pages/ListsPage";
@@ -16,7 +16,7 @@ function AppRoutes(): JSX.Element {
   return (
     <Routes>
       <Route index path="/" element={<HomePage />} />
-      <Route index path="/following" element={<Following />} />
+      <Route index path="/following" element={<FollowingPage />} />
       <Route index path="/tags" element={<TagsPage />} />
       <Route index path="/discover" element={<DiscoverPage />} />
       <Route index path="/library" element={<LibraryPage />} />
