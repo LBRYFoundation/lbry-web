@@ -4,7 +4,7 @@ import LBRY from "~/LBRY";
 import Error from "~/components/Error";
 import Loader from "~/components/Loader";
 
-function SettingsPage() {
+function SettingsPage(): JSX.Element {
   const daemonRPC: string = useDaemonRPC();
 
   const [settingsResponse, setSettingsResponse] = useState<object>(undefined);
@@ -28,7 +28,7 @@ function SettingsPage() {
         settingsResponse.error ? (
           <Error message={settingsResponse.error.message} />
         ) : (
-          <div id="settings">
+          <div id="settings" style={{ padding: "16px 0" }}>
             {Object.keys(settingsResponse.result).map(
               (setting: string, i: number): JSX.Element => (
                 <div

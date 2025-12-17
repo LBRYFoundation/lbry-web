@@ -25,7 +25,7 @@ function useAppHistory(): object {
       setIndex(index + 1); // eslint-disable-line
     }
     if (navigationType === NavigationType.Pop) {
-      if(idx.current!==-1){
+      if (idx.current !== -1) {
         const indexDelta: number = history.state?.idx - idx.current;
         setIndex(index + indexDelta);
       }

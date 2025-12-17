@@ -5,7 +5,7 @@ import LBRY from "~/LBRY";
 import Error from "~/components/Error";
 import Loader from "~/components/Loader";
 
-function WalletPage() {
+function WalletPage(): JSX.Element {
   const daemonRPC: string = useDaemonRPC();
 
   const [walletResponse, setWalletResponse] = useState<object>(undefined);
@@ -39,7 +39,7 @@ function WalletPage() {
         walletResponse.error ? (
           <Error message={walletResponse.error.message} />
         ) : (
-          <div id="wallet">
+          <div id="wallet" style={{ padding: "16px 0" }}>
             <span>
               <b>Available:</b> {walletResponse?.result?.available}
             </span>
@@ -53,37 +53,111 @@ function WalletPage() {
         transactionsResponse.error ? (
           <Error message={transactionsResponse.error.message} />
         ) : (
-          <div id="transactions">
+          <div id="transactions" style={{ padding: "16px 0" }}>
             <table style={{ width: "100%" }}>
               <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Type</th>
-                  <th>Details</th>
-                  <th>Transaction</th>
-                  <th>LBC</th>
+                <tr style={{ height: "40px" }}>
+                  <th
+                    style={{
+                      borderBottom: "1px solid rgb(51, 51, 56)",
+                      padding: "8px 0",
+                      textAlign: "left",
+                    }}
+                  >
+                    Date
+                  </th>
+                  <th
+                    style={{
+                      borderBottom: "1px solid rgb(51, 51, 56)",
+                      padding: "8px 0",
+                      textAlign: "left",
+                    }}
+                  >
+                    Type
+                  </th>
+                  <th
+                    style={{
+                      borderBottom: "1px solid rgb(51, 51, 56)",
+                      padding: "8px 0",
+                      textAlign: "left",
+                    }}
+                  >
+                    Details
+                  </th>
+                  <th
+                    style={{
+                      borderBottom: "1px solid rgb(51, 51, 56)",
+                      padding: "8px 0",
+                      textAlign: "left",
+                    }}
+                  >
+                    Transaction
+                  </th>
+                  <th
+                    style={{
+                      borderBottom: "1px solid rgb(51, 51, 56)",
+                      padding: "8px 0",
+                      textAlign: "right",
+                    }}
+                  >
+                    LBC
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                {transactionsResponse?.result?.map(
+                {transactionsResponse?.result?.items?.map(
                   (transaction: unknown, i: number): JSX.Element => (
                     <tr key={i}>
-                      <td>
-                        <span>{transaction.timestamp}</span>
+                      <td style={{ padding: "8px 0" }}>
+                        <span style={{ fontSize: 12, fontWeight: 700 }}>
+                          {((): string => {
+                            const date: Date = new Date(0);
+                            date.setUTCSeconds(transaction.timestamp);
+                            return (
+                              ("" + date.getUTCDate()).padStart(2, "0") +
+                              "-" +
+                              ("" + (date.getUTCMonth() + 1)).padStart(2, "0") +
+                              "-" +
+                              ("" + date.getUTCFullYear())
+                            );
+                          })()}
+                        </span>
                         <br />
-                        <span>{transaction.timestamp}</span>
+                        <span style={{ fontSize: 12, fontWeight: 700 }}>
+                          {((): string => {
+                            const date: Date = new Date(0);
+                            date.setUTCSeconds(transaction.timestamp);
+                            return (
+                              ("" + date.getUTCHours()).padStart(2, "0") +
+                              ":" +
+                              ("" + date.getUTCMinutes()).padStart(2, "0") +
+                              ":" +
+                              ("" + date.getUTCSeconds()).padStart(2, "0")
+                            );
+                          })()}
+                        </span>
                       </td>
-                      <td>{transaction.type}</td>
-                      <td></td>
-                      <td>
+                      <td style={{ padding: "8px 0" }}>
+                        {transaction.type === "payment"
+                          ? "Payment"
+                          : transaction.type}
+                      </td>
+                      <td style={{ padding: "8px 0" }}></td>
+                      <td style={{ padding: "8px 0" }}>
                         <Link
+                          style={{
+                            color: "rgb(43, 187, 144)",
+                            textDecoration: "none",
+                          }}
                           to={`https://explorer.lbry.org/tx/${transaction.txid}`}
                           target="_blank"
                         >
-                          {transaction.txid}
+                          {transaction.txid.substring(0, 8)}
                         </Link>
                       </td>
-                      <td>{transaction.amount}</td>
+                      <td style={{ padding: "8px 0", textAlign: "right" }}>
+                        {transaction.amount}
+                      </td>
                     </tr>
                   ),
                 )}
