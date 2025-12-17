@@ -1,16 +1,16 @@
 import React, { JSX } from "react";
 import { Route, Routes } from "react-router";
-import ClaimPage from "~/ClaimPage";
-import Discover from "~/Discover";
-import Following from "~/Following";
-import Home from "~/Home";
-import Library from "~/Library";
-import Lists from "~/Lists";
 import NotFound from "~/NotFound";
-import SearchPage from "~/SearchPage";
-import SettingsPage from "~/SettingsPage";
-import Tags from "~/Tags";
-import WalletPage from "~/WalletPage";
+import ClaimPage from "~/pages/ClaimPage";
+import Discover from "~/pages/Discover";
+import Following from "~/pages/Following";
+import Home from "~/pages/Home";
+import Library from "~/pages/Library";
+import Lists from "~/pages/Lists";
+import SearchPage from "~/pages/SearchPage";
+import SettingsPage from "~/pages/SettingsPage";
+import Tags from "~/pages/Tags";
+import WalletPage from "~/pages/WalletPage";
 
 function AppRoutes(): JSX.Element {
   return (
