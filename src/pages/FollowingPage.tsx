@@ -7,7 +7,7 @@ import CustomSVG from "~/components/CustomSVG";
 import Error from "~/components/Error";
 import Loader from "~/components/Loader";
 
-function Following(): JSX.Element {
+function FollowingPage(): JSX.Element {
   const daemonRPC: string = useDaemonRPC();
 
   const [localPreferenceResponse, setLocalPreferenceResponse] =
@@ -153,4 +153,4 @@ function Following(): JSX.Element {
   );
 }
 
-export default Following;
+export default FollowingPage;
