@@ -27,9 +27,17 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
   const urlQuery: string = new URLSearchParams(location.search).get("q") || "";
   const [query, setQuery] = useState<string>("");
 
-  const [historyMenu, setHistoryMenu] = useState<"back" | "next" | null>(null);
+  const [historyMenu, setHistoryMenu] = useState<
+    "back" | "next" | "upload" | "settings" | "account" | null
+  >(null);
   const backMenu: RefObject<HTMLUListElement> = useRef<HTMLUListElement>(null);
   const nextMenu: RefObject<HTMLUListElement> = useRef<HTMLUListElement>(null);
+  const uploadMenu: RefObject<HTMLUListElement> =
+    useRef<HTMLUListElement>(null);
+  const settingsMenu: RefObject<HTMLUListElement> =
+    useRef<HTMLUListElement>(null);
+  const accountMenu: RefObject<HTMLUListElement> =
+    useRef<HTMLUListElement>(null);
 
   useEffect(() => {
     if (!historyMenu) {
@@ -38,16 +46,21 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
 
     function handleClick(ev: MouseEvent): void {
       if (
-        historyMenu === "back" &&
-        backMenu.current &&
-        !backMenu.current.contains(ev.target as Node)
-      ) {
-        setHistoryMenu(null);
-      }
-      if (
-        historyMenu === "next" &&
-        nextMenu.current &&
-        !nextMenu.current.contains(ev.target as Node)
+        (historyMenu === "back" &&
+          backMenu.current &&
+          !backMenu.current.contains(ev.target as Node)) ||
+        (historyMenu === "next" &&
+          nextMenu.current &&
+          !nextMenu.current.contains(ev.target as Node)) ||
+        (historyMenu === "upload" &&
+          uploadMenu.current &&
+          !uploadMenu.current.contains(ev.target as Node)) ||
+        (historyMenu === "settings" &&
+          settingsMenu.current &&
+          !settingsMenu.current.contains(ev.target as Node)) ||
+        (historyMenu === "account" &&
+          accountMenu.current &&
+          !accountMenu.current.contains(ev.target as Node))
       ) {
         setHistoryMenu(null);
       }
@@ -316,51 +329,153 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
               />
             </form>
           </div>
-          <NavLink
-            className="hoverHeaderButtonFill"
-            to={null}
-            style={{
-              backgroundColor: "rgba(45, 45, 45, 0.7)",
-              borderRadius: "1.5rem",
-              display: "inline-block",
-              height: "40px",
-              marginRight: "10px",
-              textAlign: "center",
-              verticalAlign: "middle",
-              width: "40px",
-            }}
-          >
-            <CustomSVG
-              icon="publish"
-              viewBox="0 0 24 24"
-              style={{ height: "18px", padding: "11px 0", strokeWidth: "2px" }}
-            />
-          </NavLink>
-          <NavLink
-            className="hoverHeaderButtonFill"
-            to={null}
-            style={{
-              backgroundColor: "rgba(45, 45, 45, 0.7)",
-              borderRadius: "1.5rem",
-              display: "inline-block",
-              height: "40px",
-              marginRight: "10px",
-              textAlign: "center",
-              verticalAlign: "middle",
-              width: "40px",
-            }}
-          >
-            <CustomSVG
-              icon="settings"
-              viewBox="0 0 24 24"
-              style={{
-                height: "18px",
-                padding: "11px 0",
-                fill: "transparent",
-                strokeWidth: "2px",
+          <div style={{ display: "inline-block" }}>
+            <NavLink
+              className="hoverHeaderButtonFill"
+              onClick={(ev: unknown): void => {
+                ev.preventDefault();
+                setHistoryMenu(historyMenu === "upload" ? null : "upload");
               }}
-            />
-          </NavLink>
+              to={null}
+              style={{
+                backgroundColor: "rgba(45, 45, 45, 0.7)",
+                borderRadius: "1.5rem",
+                display: "inline-block",
+                height: "40px",
+                marginRight: "10px",
+                textAlign: "center",
+                verticalAlign: "middle",
+                width: "40px",
+              }}
+            >
+              <CustomSVG
+                icon="publish"
+                viewBox="0 0 24 24"
+                style={{
+                  height: "18px",
+                  padding: "11px 0",
+                  strokeWidth: "2px",
+                }}
+              />
+            </NavLink>
+            {historyMenu === "upload" ? (
+              <ul
+                ref={accountMenu}
+                style={{
+                  backgroundColor: "rgba(45, 45, 45, 0.9)",
+                  borderRadius: 6,
+                  direction: "initial",
+                  listStyle: "none",
+                  margin: "0",
+                  maxHeight: "200px",
+                  overflowY: "auto",
+                  padding: 8,
+                  position: "absolute",
+                  top: "60px",
+                }}
+              >
+                <li
+                  style={{
+                    backgroundColor: "rgb(63,63,70)",
+                    borderRadius: "6px",
+                    cursor: "pointer",
+                    padding: "6px",
+                  }}
+                >
+                  Upload
+                </li>
+                <li
+                  style={{
+                    backgroundColor: "rgb(63,63,70)",
+                    borderRadius: "6px",
+                    cursor: "pointer",
+                    padding: "6px",
+                  }}
+                >
+                  New Channel
+                </li>
+              </ul>
+            ) : null}
+          </div>
+          <div style={{ display: "inline-block" }}>
+            <NavLink
+              className="hoverHeaderButtonFill"
+              onClick={(ev: unknown): void => {
+                ev.preventDefault();
+                setHistoryMenu(historyMenu ? null : "settings");
+              }}
+              to={null}
+              style={{
+                backgroundColor: "rgba(45, 45, 45, 0.7)",
+                borderRadius: "1.5rem",
+                display: "inline-block",
+                height: "40px",
+                marginRight: "10px",
+                textAlign: "center",
+                verticalAlign: "middle",
+                width: "40px",
+              }}
+            >
+              <CustomSVG
+                icon="settings"
+                viewBox="0 0 24 24"
+                style={{
+                  height: "18px",
+                  padding: "11px 0",
+                  fill: "transparent",
+                  strokeWidth: "2px",
+                }}
+              />
+            </NavLink>
+            {historyMenu === "settings" ? (
+              <ul
+                ref={accountMenu}
+                style={{
+                  backgroundColor: "rgba(45, 45, 45, 0.9)",
+                  borderRadius: 6,
+                  direction: "initial",
+                  listStyle: "none",
+                  margin: "0",
+                  maxHeight: "200px",
+                  overflowY: "auto",
+                  padding: 8,
+                  position: "absolute",
+                  top: "60px",
+                }}
+              >
+                <li
+                  style={{
+                    backgroundColor: "rgb(63,63,70)",
+                    borderRadius: "6px",
+                    cursor: "pointer",
+                    padding: "6px",
+                  }}
+                >
+                  Uploads
+                </li>
+                <li
+                  style={{
+                    backgroundColor: "rgb(63,63,70)",
+                    borderRadius: "6px",
+                    cursor: "pointer",
+                    padding: "6px",
+                  }}
+                >
+                  Settings
+                </li>
+                <li
+                  style={{
+                    backgroundColor: "rgb(63,63,70)",
+                    borderRadius: "6px",
+                    cursor: "pointer",
+                    padding: "6px",
+                  }}
+                >
+                  Light/Dark
+                </li>
+              </ul>
+            ) : null}
+          </div>
         </div>
         <div style={{ justifyContent: "flex-end" }}>
           <Link
@@ -397,30 +512,95 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
               0.10
             </span>
           </Link>
-          <Link
-            className="hoverHeaderButtonFill"
-            to="/settings"
-            style={{
-              backgroundColor: "rgba(45, 45, 45, 0.7)",
-              borderRadius: "1.5rem",
-              display: "inline-block",
-              height: "40px",
-              textAlign: "center",
-              verticalAlign: "middle",
-              width: "40px",
-            }}
-          >
-            <CustomSVG
-              icon="account"
-              viewBox="0 0 24 24"
-              style={{
-                fill: "transparent",
-                height: "18px",
-                padding: "11px 0",
-                strokeWidth: "2px",
+          <div style={{ direction: "rtl", display: "inline-block" }}>
+            <Link
+              className="hoverHeaderButtonFill"
+              onClick={(ev: unknown): void => {
+                ev.preventDefault();
+                setHistoryMenu(historyMenu ? null : "account");
               }}
-            />
-          </Link>
+              to={null}
+              style={{
+                backgroundColor: "rgba(45, 45, 45, 0.7)",
+                borderRadius: "1.5rem",
+                direction: "initial",
+                display: "inline-block",
+                height: "40px",
+                textAlign: "center",
+                verticalAlign: "middle",
+                width: "40px",
+              }}
+            >
+              <CustomSVG
+                icon="account"
+                viewBox="0 0 24 24"
+                style={{
+                  fill: "transparent",
+                  height: "18px",
+                  padding: "11px 0",
+                  strokeWidth: "2px",
+                }}
+              />
+            </Link>
+            {historyMenu === "account" ? (
+              <ul
+                ref={accountMenu}
+                style={{
+                  backgroundColor: "rgba(45, 45, 45, 0.9)",
+                  borderRadius: 6,
+                  direction: "initial",
+                  listStyle: "none",
+                  margin: "0",
+                  maxHeight: "200px",
+                  overflowY: "auto",
+                  padding: 8,
+                  position: "absolute",
+                  top: "60px",
+                }}
+              >
+                <li
+                  style={{
+                    backgroundColor: "rgb(63,63,70)",
+                    borderRadius: "6px",
+                    cursor: "pointer",
+                    padding: "6px",
+                  }}
+                >
+                  Uploads
+                </li>
+                <li
+                  style={{
+                    backgroundColor: "rgb(63,63,70)",
+                    borderRadius: "6px",
+                    cursor: "pointer",
+                    padding: "6px",
+                  }}
+                >
+                  Channels
+                </li>
+                <li
+                  style={{
+                    backgroundColor: "rgb(63,63,70)",
+                    borderRadius: "6px",
+                    cursor: "pointer",
+                    padding: "6px",
+                  }}
+                >
+                  Creator Analytics
+                </li>
+                <li
+                  style={{
+                    backgroundColor: "rgb(63,63,70)",
+                    borderRadius: "6px",
+                    cursor: "pointer",
+                    padding: "6px",
+                  }}
+                >
+                  Cloud Connect
+                </li>
+              </ul>
+            ) : null}
+          </div>
         </div>
       </div>
     </header>
