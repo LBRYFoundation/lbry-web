@@ -320,8 +320,39 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
             </NavLink>
             {headerMenu === "upload" ? (
               <ul ref={uploadMenu}>
-                <li>Upload</li>
-                <li>New Channel</li>
+                <li>
+                  <NavLink to={null}>
+                    <CustomSVG
+                      icon="publish"
+                      viewBox="0 0 24 24"
+                      style={{
+                        height: "18px",
+                        paddingRight: "4px",
+                        stroke: "white",
+                        strokeWidth: "2px",
+                        verticalAlign: "middle",
+                      }}
+                    />{" "}
+                    <span>Upload</span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to={null}>
+                    <CustomSVG
+                      icon="at"
+                      viewBox="0 0 24 24"
+                      style={{
+                        fill: "transparent",
+                        height: "18px",
+                        paddingRight: "4px",
+                        stroke: "white",
+                        strokeWidth: "2px",
+                        verticalAlign: "middle",
+                      }}
+                    />{" "}
+                    <span>New Channel</span>
+                  </NavLink>
+                </li>
               </ul>
             ) : null}
           </div>
@@ -358,12 +389,57 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
             {headerMenu === "settings" ? (
               <ul ref={settingsMenu}>
                 <li>
-                  <NavLink to="/settings">Settings</NavLink>
+                  <NavLink to="/settings">
+                    <CustomSVG
+                      icon="settings"
+                      viewBox="0 0 24 24"
+                      style={{
+                        fill: "transparent",
+                        height: "18px",
+                        paddingRight: "4px",
+                        stroke: "white",
+                        strokeWidth: "2px",
+                        verticalAlign: "middle",
+                      }}
+                    />{" "}
+                    <span>Settings</span>
+                  </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/help">Help</NavLink>
+                  <NavLink to="/help">
+                    <CustomSVG
+                      icon="help"
+                      viewBox="0 0 24 24"
+                      style={{
+                        fill: "transparent",
+                        height: "18px",
+                        paddingRight: "4px",
+                        stroke: "white",
+                        strokeLinecap: "round",
+                        strokeWidth: "2px",
+                        verticalAlign: "middle",
+                      }}
+                    />{" "}
+                    <span>Help</span>
+                  </NavLink>
                 </li>
-                <li>Light/Dark</li>
+                <li>
+                  <NavLink to={null}>
+                    <CustomSVG
+                      icon="sun"
+                      viewBox="0 0 24 24"
+                      style={{
+                        fill: "transparent",
+                        height: "18px",
+                        paddingRight: "4px",
+                        stroke: "white",
+                        strokeWidth: "2px",
+                        verticalAlign: "middle",
+                      }}
+                    />{" "}
+                    <span>Light/Dark</span>
+                  </NavLink>
+                </li>
               </ul>
             ) : null}
           </div>
@@ -435,10 +511,78 @@ function Header({ menuOpen, menuOpenSetter }): JSX.Element {
             </Link>
             {headerMenu === "account" ? (
               <ul ref={accountMenu} style={{ direction: "initial" }}>
-                <li>Uploads</li>
-                <li>Channels</li>
-                <li>Creator Analytics</li>
-                <li>Cloud Connect</li>
+                <li>
+                  <NavLink to={null}>
+                    <CustomSVG
+                      icon="publish"
+                      viewBox="0 0 24 24"
+                      style={{
+                        fill: "transparent",
+                        height: "18px",
+                        paddingRight: "4px",
+                        stroke: "white",
+                        strokeLinecap: "round",
+                        strokeWidth: "2px",
+                        verticalAlign: "middle",
+                      }}
+                    />{" "}
+                    <span>Uploads</span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to={null}>
+                    <CustomSVG
+                      icon="at"
+                      viewBox="0 0 24 24"
+                      style={{
+                        fill: "transparent",
+                        height: "18px",
+                        paddingRight: "4px",
+                        stroke: "white",
+                        strokeLinecap: "round",
+                        strokeWidth: "2px",
+                        verticalAlign: "middle",
+                      }}
+                    />{" "}
+                    <span>Channels</span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to={null}>
+                    <CustomSVG
+                      icon="flask"
+                      viewBox="0 0 24 24"
+                      style={{
+                        fill: "transparent",
+                        height: "18px",
+                        paddingRight: "4px",
+                        stroke: "white",
+                        strokeLinecap: "round",
+                        strokeWidth: "2px",
+                        verticalAlign: "middle",
+                      }}
+                    />{" "}
+                    <span>Creator Analytics</span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to={null}>
+                    <CustomSVG
+                      icon="inside"
+                      viewBox="0 0 24 24"
+                      style={{
+                        fill: "transparent",
+                        height: "18px",
+                        paddingRight: "4px",
+                        stroke: "white",
+                        strokeLinecap: "round",
+                        strokeWidth: "2px",
+                        verticalAlign: "middle",
+                      }}
+                    />{" "}
+                    <span>Cloud Connect</span>
+                  </NavLink>
+                </li>
               </ul>
             ) : null}
           </div>
