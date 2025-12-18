@@ -8,7 +8,6 @@ import {
 
 function useAppHistory(): object {
   const location: Location = useLocation();
-  location["title"] = document.title;
 
   const navigationType: NavigationType = useNavigationType();
 
