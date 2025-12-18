@@ -1,20 +1,15 @@
+import packageJSON from "package.json";
 import React, { JSX, useEffect, useState } from "react";
 import useDaemonRPC from "~/DaemonRPC";
 import LBRY from "~/LBRY";
 import Error from "~/components/Error";
 import Loader from "~/components/Loader";
 
-function WalletPage(): JSX.Element {
+function HelpPage(): JSX.Element {
   const daemonRPC: string = useDaemonRPC();
-
-  const [version, setVersion] = useState<string | null>(null);
 
   const [statusResponse, setStatusResponse] = useState<object>(undefined);
   const [versionResponse, setVersionResponse] = useState<object>(undefined);
-
-  useEffect(() => {
-    import("/package.json").then((pkg) => setVersion(pkg.version));
-  }, []);
 
   useEffect((): void => {
     LBRY.rpc(daemonRPC, LBRY.STATUS, null, null, LBRY.isUsingProxy()).then(
@@ -54,7 +49,7 @@ function WalletPage(): JSX.Element {
                 App
               </th>
               <td style={{ borderBottom: "1px solid rgb(51, 51, 56)" }}>
-                {version}
+                {packageJSON.version}
               </td>
             </tr>
             <tr>
@@ -139,4 +134,4 @@ function WalletPage(): JSX.Element {
   );
 }
 
-export default WalletPage;
+export default HelpPage;
