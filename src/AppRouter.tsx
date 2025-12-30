@@ -1,13 +1,12 @@
+import isElectron from 'is-electron';
 import { JSX, PropsWithChildren } from "react";
 import { BrowserRouter, MemoryRouter, StaticRouter } from "react-router";
-
-const isElectron: boolean = false; // TODO Add detection
 
 function AppRouter({
   url,
   children,
 }: PropsWithChildren & { url?: string }): JSX.Element {
-  if (isElectron) {
+  if (isElectron()) {
     return <MemoryRouter>{children}</MemoryRouter>;
   }
   if (import.meta.env.SSR) {
